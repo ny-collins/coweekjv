@@ -309,4 +309,81 @@
     box-shadow: none;
     border-color: var(--border-color);
   }
+
+  /* Responsive Adjustments for Mobile Devices */
+  @media (max-width: 768px) {
+    .title-container {
+      margin-bottom: 2.25rem;
+      padding-top: 0.5rem;
+    }
+
+    .title {
+      font-size: 2.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+    }
+
+    .controls-container {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.25rem;
+      padding: 1.25rem 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-container {
+      min-width: 100%;
+      order: -1; /* Display search input at the top */
+    }
+
+    .canon-container, .sort-container {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0.4rem;
+    }
+
+    .canon-container label, .sort-container label {
+      font-size: 0.85rem;
+    }
+
+    select {
+      width: 100%;
+      padding: 0.75em 1em;
+    }
+
+    .book-list {
+      gap: 2rem;
+    }
+
+    .testament-group {
+      padding: 1.5rem 1.25rem;
+      border-radius: 12px;
+    }
+
+    .testament-title {
+      font-size: 1.35rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .title {
+      font-size: 2.1rem;
+    }
+
+    .books {
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.85rem;
+    }
+
+    .book-link {
+      padding: 1rem 0.75rem;
+      font-size: 0.95rem;
+      border-radius: 8px;
+    }
+  }
 </style>

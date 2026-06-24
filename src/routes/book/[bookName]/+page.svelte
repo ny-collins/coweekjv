@@ -136,4 +136,33 @@
     font-style: italic;
     margin: 2rem 0;
   }
+
+  /* Responsive styling for Book Index Page */
+  @media (max-width: 768px) {
+    .book-index-container {
+      padding: 1.5rem 1.25rem;
+      border-radius: 12px;
+    }
+
+    .back-link {
+      margin-bottom: 1.5rem;
+    }
+
+    .title {
+      font-size: 2rem;
+      margin-bottom: 2.25rem;
+      padding-bottom: 0.6rem;
+    }
+
+    .chapter-list {
+      grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .chapter-link {
+      padding: 1rem 0.5rem;
+      font-size: 0.95rem;
+      border-radius: 8px;
+    }
+  }
 </style>

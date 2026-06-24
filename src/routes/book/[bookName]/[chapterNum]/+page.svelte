@@ -161,7 +161,7 @@
   <div class="nav-left">
     <a href="/book/{data.bookName}" class="back-link" data-sveltekit-preload-data="hover">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-      {data.displayName}
+      <span class="back-text">{data.displayName}</span>
     </a>
   </div>
 
@@ -169,12 +169,12 @@
     {#if data.prevUrl}
       <a href={data.prevUrl} class="nav-link" data-sveltekit-preload-data="hover">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        Prev
+        <span class="nav-text">Prev</span>
       </a>
     {:else}
       <span class="nav-link disabled">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        Prev
+        <span class="nav-text">Prev</span>
       </span>
     {/if}
 
@@ -184,12 +184,12 @@
 
     {#if data.nextUrl}
       <a href={data.nextUrl} class="nav-link" data-sveltekit-preload-data="hover">
-        Next
+        <span class="nav-text">Next</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>
     {:else}
       <span class="nav-link disabled">
-        Next
+        <span class="nav-text">Next</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </span>
     {/if}
@@ -251,11 +251,11 @@
     <div class="toolbar-divider"></div>
     <button onclick={copySelectedVerses} class="toolbar-btn" aria-label="Copy selected verses">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
-      Copy Text
+      <span class="btn-text">Copy Text</span>
     </button>
     <button onclick={shareSelectedVerses} class="toolbar-btn" aria-label="Copy link to selected verses">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-      Share Link
+      <span class="btn-text">Share Link</span>
     </button>
     <button onclick={clearSelection} class="toolbar-btn clear-btn" aria-label="Clear selection">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -616,5 +616,97 @@
     font-family: var(--font-ui);
     font-size: 0.95rem;
     pointer-events: none;
+  }
+
+  /* Responsive styles for Chapter Page */
+  @media (max-width: 768px) {
+    .chapter-sticky-header {
+      padding: 0.6rem 1rem;
+      top: calc(0.25rem + env(safe-area-inset-top));
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-text {
+      display: none; /* Hide back book name to prevent overlap */
+    }
+
+    .nav-text {
+      display: none; /* Hide Prev/Next text, showing only icons */
+    }
+
+    .nav-link {
+      padding: 0.4rem;
+    }
+
+    .title-link {
+      font-size: 1.05rem;
+    }
+
+    .actions {
+      margin: 1.5rem 0;
+      gap: 0.75rem;
+    }
+
+    .scripture-card {
+      padding: 1.5rem 1.25rem;
+      border-radius: 12px;
+    }
+
+    .quick-nav-card {
+      padding: 1.25rem;
+      border-radius: 12px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .scripture-card p {
+      font-size: 1.1rem;
+      line-height: 1.95;
+      padding: 0.4rem 0.5rem 0.4rem 2rem;
+    }
+
+    .verse-num {
+      left: 0.4rem;
+      top: 0.4rem;
+      font-size: 0.8rem;
+    }
+
+    .floating-toolbar {
+      width: calc(100% - 1.5rem);
+      max-width: 320px;
+      justify-content: space-between;
+      padding: 0.4rem 0.6rem 0.4rem 1rem;
+      bottom: 1rem;
+      gap: 0.5rem;
+    }
+
+    .btn-text {
+      display: none; /* Hide button labels, showing icons only */
+    }
+
+    .toolbar-btn {
+      padding: 0.5rem;
+    }
+    
+    .page-toast {
+      bottom: 5.5rem;
+      padding: 0.6rem 1.2rem;
+      font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .actions {
+      flex-direction: column;
+      gap: 0.6rem;
+      width: 100%;
+    }
+
+    .actions button {
+      width: 100%;
+      justify-content: center;
+      padding: 0.6rem 1rem;
+    }
   }
 </style>

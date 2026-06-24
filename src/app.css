@@ -69,6 +69,12 @@ main {
   }
 }
 
+@media (max-width: 600px) {
+  main {
+    padding: 1.5rem 0.75rem;
+  }
+}
+
 /* Custom Scrollbar for Premium Feel */
 ::-webkit-scrollbar {
   width: 8px;
