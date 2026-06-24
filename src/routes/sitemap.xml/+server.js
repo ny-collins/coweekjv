@@ -1,43 +1,28 @@
 import booksWithMetadata from '$lib/data/BooksWithMetadata.json';
 
+export const prerender = true;
+
 export async function GET() {
-  const headers = { 'Content-Type': 'application/xml' };
-  let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-`;
+  const headers = {
+    'Cache-Control': 'max-age=0, s-maxage=3600',
+    'Content-Type': 'application/xml'
+  };
 
-  // Add main page
-  xml += `
-  <url>
-    <loc>https://kjv-bible-7mw.pages.dev/</loc>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>`;
+  let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
 
-  // Add book pages
+  xml += `  <url>\n    <loc>https://kjv-bible-7mw.pages.dev/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>\n`;
+
   for (const book of booksWithMetadata) {
-    xml += `
-  <url>
-    <loc>https://kjv-bible-7mw.pages.dev/book/${book.name}</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-  </url>`;
+    if (!book.missing) {
+      xml += `  <url>\n    <loc>https://kjv-bible-7mw.pages.dev/book/${book.name}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n`;
 
-    // Add chapter pages
-    const bookModule = await import(`$lib/data/${book.name}.json`);
-    const bookData = bookModule.default;
-    for (const chapter of bookData.chapters) {
-      xml += `
-  <url>
-    <loc>https://kjv-bible-7mw.pages.dev/book/${book.name}/${chapter.chapter}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>`;
+      for (let i = 1; i <= book.chapterCount; i++) {
+        xml += `  <url>\n    <loc>https://kjv-bible-7mw.pages.dev/book/${book.name}/${i}</loc>\n    <changefreq>monthly</changefreq>\n    <priority>0.5</priority>\n  </url>\n`;
+      }
     }
   }
 
-  xml += `
-</urlset>`;
+  xml += `</urlset>`;
 
   return new Response(xml, { headers });
 }

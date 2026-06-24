@@ -1,15 +1,11 @@
 export async function getBookData(bookName) {
-  let bookData;
-  switch (bookName) {
-    case 'Genesis':
-      bookData = (await import('$lib/data/Genesis.json')).default;
-      break;
-    case 'Exodus':
-      bookData = (await import('$lib/data/Exodus.json')).default;
-      break;
-    // Add all the other books here
-    default:
-      bookData = null;
+  const modules = import.meta.glob('./data/*.json');
+  const targetPath = `./data/${bookName}.json`;
+
+  if (modules[targetPath]) {
+    const module = await modules[targetPath]();
+    return module.default;
   }
-  return bookData;
+
+  return null;
 }

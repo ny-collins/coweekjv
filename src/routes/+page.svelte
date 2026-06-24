@@ -1,47 +1,36 @@
 <script>
-  import { goto, invalidate } from '$app/navigation';
-  export let data;
-  let searchTerm = '';
-  let sortOrder = 'canonical';
-  let loading = false;
+  import { onMount } from 'svelte';
 
-  let filteredBooks = data.books;
+  let { data } = $props();
+  let searchTerm = $state('');
+  let sortOrder = $state('canonical');
+  let selectedCanon = $state(data.canon);
 
-  function handleInput() {
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    filteredBooks = data.books.filter(book =>
-      book.displayName.toLowerCase().includes(lowerCaseSearchTerm)
-    );
-  }
+  $effect(() => {
+    selectedCanon = data.canon;
+  });
 
-  function sortBooks() {
-    if (sortOrder === 'alphabetical') {
-      filteredBooks.sort((a, b) => a.displayName.localeCompare(b.displayName));
-    } else if (sortOrder === 'chronological') {
-      filteredBooks.sort((a, b) => a.chronologicalOrder - b.chronologicalOrder);
-    } else {
-      filteredBooks.sort((a, b) => a.canonicalOrder - b.canonicalOrder);
+  let availableBooks = $derived(
+    data.collections[selectedCanon].books.map(name => data.books.find(b => b.name === name)).filter(Boolean)
+  );
+
+  let filteredBooks = $derived(availableBooks.filter(book =>
+    book.displayName.toLowerCase().includes(searchTerm.toLowerCase())
+  ).sort((a, b) => {
+    if (sortOrder === 'alphabetical') return a.displayName.localeCompare(b.displayName);
+    if (sortOrder === 'chronological') {
+      const diff = a.chronologicalOrder - b.chronologicalOrder;
+      return diff !== 0 ? diff : a.canonicalOrder - b.canonicalOrder;
     }
-    filteredBooks = filteredBooks;
-  }
+    return a.canonicalOrder - b.canonicalOrder;
+  }));
 
-  async function handleCanonChange(e) {
-    const canon = e.target.value;
-    loading = true;
-    window.location.href = `?canon=${canon}`;
-  }
-
-  const structuredData = {
+  let structuredData = $derived({
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "KJV Bible",
-    "url": "https://kjv-bible-7mw.pages.dev/",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://kjv-bible-7mw.pages.dev/book/{search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  };
+    "url": "https://kjv-bible-7mw.pages.dev/"
+  });
 </script>
 
 <svelte:head>
@@ -57,58 +46,82 @@
   <p class="subtitle">King James Version</p>
 </div>
 
-<div class="canon-container">
+<div class="controls-container">
+  <div class="canon-container">
     <label for="canon-select">Canon:</label>
-    <select id="canon-select" bind:value={data.canon} on:change={handleCanonChange}>
+    <select id="canon-select" bind:value={selectedCanon}>
       {#each Object.entries(data.collections) as [key, { name }]}
         <option value={key}>{name}</option>
       {/each}
     </select>
   </div>
 
-  {#if loading}
-    <div class="loader">Loading...</div>
-  {:else}
-    <div class="controls-container">
-      <div class="search-container">
-        <input type="text" placeholder="Search for a book..." bind:value={searchTerm} on:input={handleInput} />
-      </div>
-      <div class="sort-container">
-        <label for="sort-order">Sort by:</label>
-        <select id="sort-order" bind:value={sortOrder} on:change={sortBooks}>
-          <option value="canonical">Canonical</option>
-          <option value="alphabetical">Alphabetical</option>
-          <option value="chronological">Chronological</option>
-        </select>
-      </div>
-    </div>
-    <div class="book-list">
+  <div class="search-container">
+    <input type="text" id="book-search" placeholder="Search for a book..." aria-label="Search for a book" bind:value={searchTerm} />
+  </div>
+
+  <div class="sort-container">
+    <label for="sort-order">Sort by:</label>
+    <select id="sort-order" bind:value={sortOrder}>
+      <option value="canonical">Canonical</option>
+      <option value="alphabetical">Alphabetical</option>
+      <option value="chronological">Chronological</option>
+    </select>
+  </div>
+</div>
+
+{#if filteredBooks.length > 0}
+  <div class="book-list">
+    {#if filteredBooks.some(b => b.testament === 'Old')}
       <div class="testament-group">
         <h2 class="testament-title">Old Testament</h2>
         <div class="books">
           {#each filteredBooks.filter(b => b.testament === 'Old') as book}
-            <a href="/book/{book.name}" class="book-link">{book.displayName}</a>
+            {#if book.missing}
+              <span class="book-link disabled" title="Text currently unavailable">{book.displayName}</span>
+            {:else}
+              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{book.displayName}</a>
+            {/if}
           {/each}
         </div>
       </div>
+    {/if}
+
+    {#if filteredBooks.some(b => b.testament === 'New')}
       <div class="testament-group">
         <h2 class="testament-title">New Testament</h2>
         <div class="books">
           {#each filteredBooks.filter(b => b.testament === 'New') as book}
-            <a href="/book/{book.name}" class="book-link">{book.displayName}</a>
+            {#if book.missing}
+              <span class="book-link disabled" title="Text currently unavailable">{book.displayName}</span>
+            {:else}
+              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{book.displayName}</a>
+            {/if}
           {/each}
         </div>
       </div>
+    {/if}
+
+    {#if filteredBooks.some(b => b.testament === 'Apocrypha')}
       <div class="testament-group">
         <h2 class="testament-title">Apocrypha</h2>
         <div class="books">
           {#each filteredBooks.filter(b => b.testament === 'Apocrypha') as book}
-            <a href="/book/{book.name}" class="book-link">{book.displayName}</a>
+            {#if book.missing}
+              <span class="book-link disabled" title="Text currently unavailable">{book.displayName}</span>
+            {:else}
+              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{book.displayName}</a>
+            {/if}
           {/each}
         </div>
       </div>
-    </div>
-  {/if}
+    {/if}
+  </div>
+{:else}
+  <div class="no-results">
+    <p>No books found matching "{searchTerm}"</p>
+  </div>
+{/if}
 
 <style>
   .title-container {
@@ -151,17 +164,10 @@
     color: var(--text-color);
   }
 
-  .sort-container {
+  .sort-container, .canon-container {
     display: flex;
     align-items: center;
     gap: 0.5em;
-  }
-
-  .canon-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
-    margin-bottom: 1em;
   }
 
   select {
@@ -220,9 +226,20 @@
     color: var(--background-color);
   }
 
-  .loader {
+  .no-results {
     text-align: center;
-    font-size: 1.5rem;
-    margin-top: 2em;
+    padding: 3em;
+    border: 1px dashed var(--border-color);
+    border-radius: 8px;
+    color: var(--text-color);
+    font-size: 1.2rem;
+  }
+
+  .book-link.disabled {
+    background-color: var(--border-color);
+    color: #999;
+    cursor: not-allowed;
+    opacity: 0.6;
+    border: 1px dashed var(--border-color);
   }
 </style>

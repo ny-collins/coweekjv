@@ -1,32 +1,39 @@
 <script>
-  export let data;
+  let { data } = $props();
 
-  const structuredData = {
+  let structuredData = $derived({
     "@context": "https://schema.org",
     "@type": "Book",
-    "name": data.bookName,
-    "hasPart": data.chapters.map(chapter => ({
+    "name": data.displayName,
+    "hasPart": (data.chapters || []).map(chapter => ({
       "@type": "CreativeWork",
-      "name": `${data.bookName} ${chapter}`
+      "name": `${data.displayName} ${chapter}`
     }))
-  };
+  });
 </script>
 
 <svelte:head>
-  <title>{data.bookName} | KJV Bible</title>
-  <meta name="description" content={`Read the book of ${data.bookName} from the King James Version of the Bible.`} />
-  <script type="application/ld+json">
-    {JSON.stringify(structuredData)}
-  </script>
+  <title>{data.displayName} | KJV Bible</title>
+  <meta name="description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
+  {#if data.chapters}
+    <script type="application/ld+json">
+      {JSON.stringify(structuredData)}
+    </script>
+  {/if}
 </svelte:head>
 
-<a href="/" class="back-link">← Back to Books</a>
+<a href="/" class="back-link" data-sveltekit-preload-data="hover">← Back to Books</a>
 <h1 class="title">{data.displayName}</h1>
-<div class="chapter-list">
-  {#each data.chapters as chapter}
-    <a href="/book/{data.bookName}/{chapter}" class="chapter-link">Chapter {chapter}</a>
-  {/each}
-</div>
+
+{#if data.chapters && data.chapters.length > 0}
+  <div class="chapter-list">
+    {#each data.chapters as chapter}
+      <a href="/book/{data.bookName}/{chapter}" class="chapter-link" data-sveltekit-preload-data="hover">Chapter {chapter}</a>
+    {/each}
+  </div>
+{:else}
+  <p style="text-align: center; color: var(--text-color);">The text for this book is currently unavailable.</p>
+{/if}
 
 <style>
   .back-link {

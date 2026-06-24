@@ -1,83 +1,1033 @@
 [
-  { "name": "Genesis", "displayName": "Genesis", "chronologicalOrder": 1, "canonicalOrder": 1, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Exodus", "displayName": "Exodus", "chronologicalOrder": 2, "canonicalOrder": 2, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Leviticus", "displayName": "Leviticus", "chronologicalOrder": 3, "canonicalOrder": 3, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Numbers", "displayName": "Numbers", "chronologicalOrder": 4, "canonicalOrder": 4, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Deuteronomy", "displayName": "Deuteronomy", "chronologicalOrder": 5, "canonicalOrder": 5, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Joshua", "displayName": "Joshua", "chronologicalOrder": 7, "canonicalOrder": 6, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Judges", "displayName": "Judges", "chronologicalOrder": 8, "canonicalOrder": 7, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Ruth", "displayName": "Ruth", "chronologicalOrder": 9, "canonicalOrder": 8, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Samuel", "displayName": "1 Samuel", "chronologicalOrder": 10, "canonicalOrder": 9, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Samuel", "displayName": "2 Samuel", "chronologicalOrder": 11, "canonicalOrder": 10, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Kings", "displayName": "1 Kings", "chronologicalOrder": 18, "canonicalOrder": 11, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Kings", "displayName": "2 Kings", "chronologicalOrder": 19, "canonicalOrder": 12, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Chronicles", "displayName": "1 Chronicles", "chronologicalOrder": 12, "canonicalOrder": 13, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Chronicles", "displayName": "2 Chronicles", "chronologicalOrder": 13, "canonicalOrder": 14, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Ezra", "displayName": "Ezra", "chronologicalOrder": 33, "canonicalOrder": 15, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Nehemiah", "displayName": "Nehemiah", "chronologicalOrder": 34, "canonicalOrder": 16, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Esther", "displayName": "Esther", "chronologicalOrder": 35, "canonicalOrder": 17, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Job", "displayName": "Job", "chronologicalOrder": 6, "canonicalOrder": 18, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Psalms", "displayName": "Psalms", "chronologicalOrder": 14, "canonicalOrder": 19, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Proverbs", "displayName": "Proverbs", "chronologicalOrder": 16, "canonicalOrder": 20, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Ecclesiastes", "displayName": "Ecclesiastes", "chronologicalOrder": 17, "canonicalOrder": 21, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "SongofSolomon", "displayName": "Song of Solomon", "chronologicalOrder": 15, "canonicalOrder": 22, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Isaiah", "displayName": "Isaiah", "chronologicalOrder": 24, "canonicalOrder": 23, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Jeremiah", "displayName": "Jeremiah", "chronologicalOrder": 28, "canonicalOrder": 24, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Lamentations", "displayName": "Lamentations", "chronologicalOrder": 29, "canonicalOrder": 25, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Ezekiel", "displayName": "Ezekiel", "chronologicalOrder": 30, "canonicalOrder": 26, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Daniel", "displayName": "Daniel", "chronologicalOrder": 32, "canonicalOrder": 27, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Hosea", "displayName": "Hosea", "chronologicalOrder": 22, "canonicalOrder": 28, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Joel", "displayName": "Joel", "chronologicalOrder": 21, "canonicalOrder": 29, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Amos", "displayName": "Amos", "chronologicalOrder": 20, "canonicalOrder": 30, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Obadiah", "displayName": "Obadiah", "chronologicalOrder": 31, "canonicalOrder": 31, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Jonah", "displayName": "Jonah", "chronologicalOrder": 19, "canonicalOrder": 32, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Micah", "displayName": "Micah", "chronologicalOrder": 23, "canonicalOrder": 33, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Nahum", "displayName": "Nahum", "chronologicalOrder": 25, "canonicalOrder": 34, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Habakkuk", "displayName": "Habakkuk", "chronologicalOrder": 27, "canonicalOrder": 35, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Zephaniah", "displayName": "Zephaniah", "chronologicalOrder": 26, "canonicalOrder": 36, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Haggai", "displayName": "Haggai", "chronologicalOrder": 36, "canonicalOrder": 37, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Zechariah", "displayName": "Zechariah", "chronologicalOrder": 37, "canonicalOrder": 38, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Malachi", "displayName": "Malachi", "chronologicalOrder": 38, "canonicalOrder": 39, "testament": "Old", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Matthew", "displayName": "Matthew", "chronologicalOrder": 39, "canonicalOrder": 40, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Mark", "displayName": "Mark", "chronologicalOrder": 40, "canonicalOrder": 41, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Luke", "displayName": "Luke", "chronologicalOrder": 41, "canonicalOrder": 42, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "John", "displayName": "John", "chronologicalOrder": 42, "canonicalOrder": 43, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Acts", "displayName": "Acts", "chronologicalOrder": 43, "canonicalOrder": 44, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Romans", "displayName": "Romans", "chronologicalOrder": 50, "canonicalOrder": 45, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Corinthians", "displayName": "1 Corinthians", "chronologicalOrder": 48, "canonicalOrder": 46, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Corinthians", "displayName": "2 Corinthians", "chronologicalOrder": 49, "canonicalOrder": 47, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Galatians", "displayName": "Galatians", "chronologicalOrder": 45, "canonicalOrder": 48, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Ephesians", "displayName": "Ephesians", "chronologicalOrder": 51, "canonicalOrder": 49, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Philippians", "displayName": "Philippians", "chronologicalOrder": 52, "canonicalOrder": 50, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Colossians", "displayName": "Colossians", "chronologicalOrder": 53, "canonicalOrder": 51, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Thessalonians", "displayName": "1 Thessalonians", "chronologicalOrder": 46, "canonicalOrder": 52, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Thessalonians", "displayName": "2 Thessalonians", "chronologicalOrder": 47, "canonicalOrder": 53, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Timothy", "displayName": "1 Timothy", "chronologicalOrder": 56, "canonicalOrder": 54, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Timothy", "displayName": "2 Timothy", "chronologicalOrder": 59, "canonicalOrder": 55, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Titus", "displayName": "Titus", "chronologicalOrder": 57, "canonicalOrder": 56, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Philemon", "displayName": "Philemon", "chronologicalOrder": 54, "canonicalOrder": 57, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Hebrews", "displayName": "Hebrews", "chronologicalOrder": 55, "canonicalOrder": 58, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "James", "displayName": "James", "chronologicalOrder": 44, "canonicalOrder": 59, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Peter", "displayName": "1 Peter", "chronologicalOrder": 58, "canonicalOrder": 60, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2Peter", "displayName": "2 Peter", "chronologicalOrder": 60, "canonicalOrder": 61, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1John", "displayName": "1 John", "chronologicalOrder": 62, "canonicalOrder": 62, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "2John", "displayName": "2 John", "chronologicalOrder": 63, "canonicalOrder": 63, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "3John", "displayName": "3 John", "chronologicalOrder": 64, "canonicalOrder": 64, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Jude", "displayName": "Jude", "chronologicalOrder": 61, "canonicalOrder": 65, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "Revelation", "displayName": "Revelation", "chronologicalOrder": 65, "canonicalOrder": 66, "testament": "New", "canons": ["protestant", "catholic", "orthodox"] },
-  { "name": "1Esdras", "displayName": "1 Esdras", "chronologicalOrder": 39, "canonicalOrder": 67, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "2Esdras", "displayName": "2 Esdras", "chronologicalOrder": 40, "canonicalOrder": 68, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "Tobit", "displayName": "Tobit", "chronologicalOrder": 41, "canonicalOrder": 69, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "Judith", "displayName": "Judith", "chronologicalOrder": 42, "canonicalOrder": 70, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "WisdomofSolomon", "displayName": "Wisdom of Solomon", "chronologicalOrder": 43, "canonicalOrder": 71, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "Ecclesiasticus", "displayName": "Ecclesiasticus", "chronologicalOrder": 44, "canonicalOrder": 72, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "Baruch", "displayName": "Baruch", "chronologicalOrder": 45, "canonicalOrder": 73, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "LetterofJeremiah", "displayName": "Letter of Jeremiah", "chronologicalOrder": 46, "canonicalOrder": 74, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "PrayerofAzariah", "displayName": "Prayer of Azariah", "chronologicalOrder": 47, "canonicalOrder": 75, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "Susanna", "displayName": "Susanna", "chronologicalOrder": 48, "canonicalOrder": 76, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "BelandtheDragon", "displayName": "Bel and the Dragon", "chronologicalOrder": 49, "canonicalOrder": 77, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "PrayerofManasseh", "displayName": "Prayer of Manasseh", "chronologicalOrder": 50, "canonicalOrder": 78, "testament": "Apocrypha", "canons": ["orthodox"] },
-  { "name": "1Maccabees", "displayName": "1 Maccabees", "chronologicalOrder": 51, "canonicalOrder": 79, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "2Maccabees", "displayName": "2 Maccabees", "chronologicalOrder": 52, "canonicalOrder": 80, "testament": "Apocrypha", "canons": ["catholic", "orthodox"] },
-  { "name": "3Maccabees", "displayName": "3 Maccabees", "chronologicalOrder": 53, "canonicalOrder": 81, "testament": "Apocrypha", "canons": ["orthodox"], "missing": true }
+  {
+    "name": "Genesis",
+    "displayName": "Genesis",
+    "chronologicalOrder": 1,
+    "canonicalOrder": 1,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 50
+  },
+  {
+    "name": "Exodus",
+    "displayName": "Exodus",
+    "chronologicalOrder": 2,
+    "canonicalOrder": 2,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 40
+  },
+  {
+    "name": "Leviticus",
+    "displayName": "Leviticus",
+    "chronologicalOrder": 3,
+    "canonicalOrder": 3,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 27
+  },
+  {
+    "name": "Numbers",
+    "displayName": "Numbers",
+    "chronologicalOrder": 4,
+    "canonicalOrder": 4,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 36
+  },
+  {
+    "name": "Deuteronomy",
+    "displayName": "Deuteronomy",
+    "chronologicalOrder": 5,
+    "canonicalOrder": 5,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 34
+  },
+  {
+    "name": "Joshua",
+    "displayName": "Joshua",
+    "chronologicalOrder": 7,
+    "canonicalOrder": 6,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 24
+  },
+  {
+    "name": "Judges",
+    "displayName": "Judges",
+    "chronologicalOrder": 8,
+    "canonicalOrder": 7,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 21
+  },
+  {
+    "name": "Ruth",
+    "displayName": "Ruth",
+    "chronologicalOrder": 9,
+    "canonicalOrder": 8,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 4
+  },
+  {
+    "name": "1Samuel",
+    "displayName": "1 Samuel",
+    "chronologicalOrder": 10,
+    "canonicalOrder": 9,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 31
+  },
+  {
+    "name": "2Samuel",
+    "displayName": "2 Samuel",
+    "chronologicalOrder": 11,
+    "canonicalOrder": 10,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 24
+  },
+  {
+    "name": "1Kings",
+    "displayName": "1 Kings",
+    "chronologicalOrder": 18,
+    "canonicalOrder": 11,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 22
+  },
+  {
+    "name": "2Kings",
+    "displayName": "2 Kings",
+    "chronologicalOrder": 19,
+    "canonicalOrder": 12,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 25
+  },
+  {
+    "name": "1Chronicles",
+    "displayName": "1 Chronicles",
+    "chronologicalOrder": 12,
+    "canonicalOrder": 13,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 29
+  },
+  {
+    "name": "2Chronicles",
+    "displayName": "2 Chronicles",
+    "chronologicalOrder": 13,
+    "canonicalOrder": 14,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 36
+  },
+  {
+    "name": "Ezra",
+    "displayName": "Ezra",
+    "chronologicalOrder": 33,
+    "canonicalOrder": 15,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 10
+  },
+  {
+    "name": "Nehemiah",
+    "displayName": "Nehemiah",
+    "chronologicalOrder": 34,
+    "canonicalOrder": 16,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 13
+  },
+  {
+    "name": "Esther",
+    "displayName": "Esther",
+    "chronologicalOrder": 35,
+    "canonicalOrder": 17,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 10
+  },
+  {
+    "name": "Job",
+    "displayName": "Job",
+    "chronologicalOrder": 6,
+    "canonicalOrder": 18,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 42
+  },
+  {
+    "name": "Psalms",
+    "displayName": "Psalms",
+    "chronologicalOrder": 14,
+    "canonicalOrder": 19,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 150
+  },
+  {
+    "name": "Proverbs",
+    "displayName": "Proverbs",
+    "chronologicalOrder": 16,
+    "canonicalOrder": 20,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 31
+  },
+  {
+    "name": "Ecclesiastes",
+    "displayName": "Ecclesiastes",
+    "chronologicalOrder": 17,
+    "canonicalOrder": 21,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 12
+  },
+  {
+    "name": "SongofSolomon",
+    "displayName": "Song of Solomon",
+    "chronologicalOrder": 15,
+    "canonicalOrder": 22,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 8
+  },
+  {
+    "name": "Isaiah",
+    "displayName": "Isaiah",
+    "chronologicalOrder": 24,
+    "canonicalOrder": 23,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 66
+  },
+  {
+    "name": "Jeremiah",
+    "displayName": "Jeremiah",
+    "chronologicalOrder": 28,
+    "canonicalOrder": 24,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 52
+  },
+  {
+    "name": "Lamentations",
+    "displayName": "Lamentations",
+    "chronologicalOrder": 29,
+    "canonicalOrder": 25,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 5
+  },
+  {
+    "name": "Ezekiel",
+    "displayName": "Ezekiel",
+    "chronologicalOrder": 30,
+    "canonicalOrder": 26,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 48
+  },
+  {
+    "name": "Daniel",
+    "displayName": "Daniel",
+    "chronologicalOrder": 32,
+    "canonicalOrder": 27,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 12
+  },
+  {
+    "name": "Hosea",
+    "displayName": "Hosea",
+    "chronologicalOrder": 22,
+    "canonicalOrder": 28,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 14
+  },
+  {
+    "name": "Joel",
+    "displayName": "Joel",
+    "chronologicalOrder": 21,
+    "canonicalOrder": 29,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "Amos",
+    "displayName": "Amos",
+    "chronologicalOrder": 20,
+    "canonicalOrder": 30,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 9
+  },
+  {
+    "name": "Obadiah",
+    "displayName": "Obadiah",
+    "chronologicalOrder": 31,
+    "canonicalOrder": 31,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Jonah",
+    "displayName": "Jonah",
+    "chronologicalOrder": 19,
+    "canonicalOrder": 32,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 4
+  },
+  {
+    "name": "Micah",
+    "displayName": "Micah",
+    "chronologicalOrder": 23,
+    "canonicalOrder": 33,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 7
+  },
+  {
+    "name": "Nahum",
+    "displayName": "Nahum",
+    "chronologicalOrder": 25,
+    "canonicalOrder": 34,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "Habakkuk",
+    "displayName": "Habakkuk",
+    "chronologicalOrder": 27,
+    "canonicalOrder": 35,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "Zephaniah",
+    "displayName": "Zephaniah",
+    "chronologicalOrder": 26,
+    "canonicalOrder": 36,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "Haggai",
+    "displayName": "Haggai",
+    "chronologicalOrder": 36,
+    "canonicalOrder": 37,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 2
+  },
+  {
+    "name": "Zechariah",
+    "displayName": "Zechariah",
+    "chronologicalOrder": 37,
+    "canonicalOrder": 38,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 14
+  },
+  {
+    "name": "Malachi",
+    "displayName": "Malachi",
+    "chronologicalOrder": 38,
+    "canonicalOrder": 39,
+    "testament": "Old",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 4
+  },
+  {
+    "name": "Matthew",
+    "displayName": "Matthew",
+    "chronologicalOrder": 39,
+    "canonicalOrder": 40,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 28
+  },
+  {
+    "name": "Mark",
+    "displayName": "Mark",
+    "chronologicalOrder": 40,
+    "canonicalOrder": 41,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 16
+  },
+  {
+    "name": "Luke",
+    "displayName": "Luke",
+    "chronologicalOrder": 41,
+    "canonicalOrder": 42,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 24
+  },
+  {
+    "name": "John",
+    "displayName": "John",
+    "chronologicalOrder": 42,
+    "canonicalOrder": 43,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 21
+  },
+  {
+    "name": "Acts",
+    "displayName": "Acts",
+    "chronologicalOrder": 43,
+    "canonicalOrder": 44,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 28
+  },
+  {
+    "name": "Romans",
+    "displayName": "Romans",
+    "chronologicalOrder": 50,
+    "canonicalOrder": 45,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 16
+  },
+  {
+    "name": "1Corinthians",
+    "displayName": "1 Corinthians",
+    "chronologicalOrder": 48,
+    "canonicalOrder": 46,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 16
+  },
+  {
+    "name": "2Corinthians",
+    "displayName": "2 Corinthians",
+    "chronologicalOrder": 49,
+    "canonicalOrder": 47,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 13
+  },
+  {
+    "name": "Galatians",
+    "displayName": "Galatians",
+    "chronologicalOrder": 45,
+    "canonicalOrder": 48,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 6
+  },
+  {
+    "name": "Ephesians",
+    "displayName": "Ephesians",
+    "chronologicalOrder": 51,
+    "canonicalOrder": 49,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 6
+  },
+  {
+    "name": "Philippians",
+    "displayName": "Philippians",
+    "chronologicalOrder": 52,
+    "canonicalOrder": 50,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 4
+  },
+  {
+    "name": "Colossians",
+    "displayName": "Colossians",
+    "chronologicalOrder": 53,
+    "canonicalOrder": 51,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 4
+  },
+  {
+    "name": "1Thessalonians",
+    "displayName": "1 Thessalonians",
+    "chronologicalOrder": 46,
+    "canonicalOrder": 52,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 5
+  },
+  {
+    "name": "2Thessalonians",
+    "displayName": "2 Thessalonians",
+    "chronologicalOrder": 47,
+    "canonicalOrder": 53,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "1Timothy",
+    "displayName": "1 Timothy",
+    "chronologicalOrder": 56,
+    "canonicalOrder": 54,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 6
+  },
+  {
+    "name": "2Timothy",
+    "displayName": "2 Timothy",
+    "chronologicalOrder": 59,
+    "canonicalOrder": 55,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 4
+  },
+  {
+    "name": "Titus",
+    "displayName": "Titus",
+    "chronologicalOrder": 57,
+    "canonicalOrder": 56,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "Philemon",
+    "displayName": "Philemon",
+    "chronologicalOrder": 54,
+    "canonicalOrder": 57,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Hebrews",
+    "displayName": "Hebrews",
+    "chronologicalOrder": 55,
+    "canonicalOrder": 58,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 13
+  },
+  {
+    "name": "James",
+    "displayName": "James",
+    "chronologicalOrder": 44,
+    "canonicalOrder": 59,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 5
+  },
+  {
+    "name": "1Peter",
+    "displayName": "1 Peter",
+    "chronologicalOrder": 58,
+    "canonicalOrder": 60,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 5
+  },
+  {
+    "name": "2Peter",
+    "displayName": "2 Peter",
+    "chronologicalOrder": 60,
+    "canonicalOrder": 61,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 3
+  },
+  {
+    "name": "1John",
+    "displayName": "1 John",
+    "chronologicalOrder": 62,
+    "canonicalOrder": 62,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 5
+  },
+  {
+    "name": "2John",
+    "displayName": "2 John",
+    "chronologicalOrder": 63,
+    "canonicalOrder": 63,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "3John",
+    "displayName": "3 John",
+    "chronologicalOrder": 64,
+    "canonicalOrder": 64,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Jude",
+    "displayName": "Jude",
+    "chronologicalOrder": 61,
+    "canonicalOrder": 65,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Revelation",
+    "displayName": "Revelation",
+    "chronologicalOrder": 65,
+    "canonicalOrder": 66,
+    "testament": "New",
+    "canons": [
+      "protestant",
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 22
+  },
+  {
+    "name": "1Esdras",
+    "displayName": "1 Esdras",
+    "chronologicalOrder": 39,
+    "canonicalOrder": 67,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "2Esdras",
+    "displayName": "2 Esdras",
+    "chronologicalOrder": 40,
+    "canonicalOrder": 68,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Tobit",
+    "displayName": "Tobit",
+    "chronologicalOrder": 41,
+    "canonicalOrder": 69,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Judith",
+    "displayName": "Judith",
+    "chronologicalOrder": 42,
+    "canonicalOrder": 70,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "WisdomofSolomon",
+    "displayName": "Wisdom of Solomon",
+    "chronologicalOrder": 43,
+    "canonicalOrder": 71,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Ecclesiasticus",
+    "displayName": "Ecclesiasticus",
+    "chronologicalOrder": 44,
+    "canonicalOrder": 72,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Baruch",
+    "displayName": "Baruch",
+    "chronologicalOrder": 45,
+    "canonicalOrder": 73,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "LetterofJeremiah",
+    "displayName": "Letter of Jeremiah",
+    "chronologicalOrder": 46,
+    "canonicalOrder": 74,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "PrayerofAzariah",
+    "displayName": "Prayer of Azariah",
+    "chronologicalOrder": 47,
+    "canonicalOrder": 75,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "Susanna",
+    "displayName": "Susanna",
+    "chronologicalOrder": 48,
+    "canonicalOrder": 76,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "BelandtheDragon",
+    "displayName": "Bel and the Dragon",
+    "chronologicalOrder": 49,
+    "canonicalOrder": 77,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "PrayerofManasseh",
+    "displayName": "Prayer of Manasseh",
+    "chronologicalOrder": 50,
+    "canonicalOrder": 78,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "1Maccabees",
+    "displayName": "1 Maccabees",
+    "chronologicalOrder": 51,
+    "canonicalOrder": 79,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "2Maccabees",
+    "displayName": "2 Maccabees",
+    "chronologicalOrder": 52,
+    "canonicalOrder": 80,
+    "testament": "Apocrypha",
+    "canons": [
+      "catholic",
+      "orthodox"
+    ],
+    "chapterCount": 1
+  },
+  {
+    "name": "3Maccabees",
+    "displayName": "3 Maccabees",
+    "chronologicalOrder": 53,
+    "canonicalOrder": 81,
+    "testament": "Apocrypha",
+    "canons": [
+      "orthodox"
+    ],
+    "missing": true,
+    "chapterCount": 0
+  }
 ]

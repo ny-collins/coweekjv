@@ -1,12 +1,10 @@
 <script>
-  export let data;
+  let { data } = $props();
 
-  // The reactive variables for our navigation
-  $: prevChapter = data.chapterNum > 1 ? data.chapterNum - 1 : null;
-  $: nextChapter = data.chapterNum < data.totalChapters ? data.chapterNum + 1 : null;
+
 
   function cite() {
-    const citation = `${data.bookName} ${data.chapterNum}, King James Version.`;
+    const citation = `${data.displayName} ${data.chapterNum}, King James Version.`;
     navigator.clipboard.writeText(citation);
     alert('Citation copied to clipboard!');
   }
@@ -22,21 +20,21 @@
     URL.revokeObjectURL(url);
   }
 
-  const structuredData = {
+  let structuredData = $derived({
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    "name": `${data.bookName} ${data.chapterNum}`,
+    "name": `${data.displayName} ${data.chapterNum}`,
     "isPartOf": {
       "@type": "Book",
-      "name": data.bookName
+      "name": data.displayName
     },
-    "text": data.verses.map(v => v.text).join(' ')
-  };
+    "text": data.verses ? data.verses.map(v => v.text).join(' ') : ''
+  });
 </script>
 
 <svelte:head>
-  <title>{data.bookName} {data.chapterNum} | KJV Bible</title>
-  <meta name="description" content={`Read ${data.bookName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
+  <title>{data.displayName} {data.chapterNum} | KJV Bible</title>
+  <meta name="description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
   <script type="application/ld+json">
     {JSON.stringify(structuredData)}
   </script>
@@ -45,16 +43,18 @@
 <nav>
   <a href="/book/{data.bookName}" class="back-link">← {data.displayName}</a>
   <div class="chapter-nav">
-    {#if prevChapter}
-      <a href="/book/{data.bookName}/{prevChapter}" class="nav-link">← Prev</a>
+    {#if data.prevUrl}
+      <a href={data.prevUrl} class="nav-link">← Prev</a>
     {:else}
       <span class="nav-link disabled">← Prev</span>
     {/if}
 
-    <a href="/book/{data.bookName}" class="title-link">{data.displayName} {data.chapterNum}</a>
+    <h1 class="title-heading">
+      <a href="/book/{data.bookName}" class="title-link">{data.displayName} {data.chapterNum}</a>
+    </h1>
 
-    {#if nextChapter}
-      <a href="/book/{data.bookName}/{nextChapter}" class="nav-link">Next →</a>
+    {#if data.nextUrl}
+      <a href={data.nextUrl} class="nav-link">Next →</a>
     {:else}
       <span class="nav-link disabled">Next →</span>
     {/if}
@@ -62,8 +62,8 @@
 </nav>
 
 <div class="actions">
-  <button on:click={cite}>Cite this</button>
-  <button on:click={download}>Download as JSON</button>
+  <button onclick={cite}>Cite this</button>
+  <button onclick={download}>Download as JSON</button>
 </div>
 
 <div class="chapter-container">
@@ -116,6 +116,14 @@
     gap: 1em;
   }
 
+  .title-heading {
+    font-size: inherit;
+    margin: 0;
+    padding: 0;
+    font-weight: inherit;
+    display: inline-block;
+  }
+
   .title-link {
     font-size: 1.2rem;
     font-weight: 600;
@@ -154,6 +162,7 @@
 
   .chapter-container {
     display: flex;
+    flex-direction: column;
     gap: 2em;
   }
 
@@ -162,12 +171,21 @@
   }
 
   aside {
-    display: none;
+    display: block;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2em;
+    margin-top: 1em;
   }
 
   @media (min-width: 1200px) {
+    .chapter-container {
+      flex-direction: row;
+    }
+
     aside {
-      display: block;
+      border-top: none;
+      padding-top: 0;
+      margin-top: 0;
       flex: 1;
       border-left: 1px solid var(--border-color);
       padding-left: 2em;

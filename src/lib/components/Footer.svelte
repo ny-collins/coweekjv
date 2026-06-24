@@ -5,7 +5,7 @@
 </script>
 
 <footer>
-  <button on:click={scrollToTop}>Scroll to Top</button>
+  <button onclick={scrollToTop}>Scroll to Top</button>
   <p>
     Powered by <a href="https://svelte.dev/">SvelteKit</a>
   </p>
