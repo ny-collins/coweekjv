@@ -126,120 +126,187 @@
 <style>
   .title-container {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 3.5rem;
+    padding-top: 1rem;
   }
 
   .title {
-    font-size: 3rem;
+    font-size: 3.5rem;
+    font-weight: 800;
     color: var(--text-color);
     margin: 0;
+    letter-spacing: -0.03em;
   }
 
   .subtitle {
-    font-size: 1.5rem;
-    color: var(--text-color);
-    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--link-color);
+    margin: 0.75rem 0 0 0;
+    opacity: 0.9;
   }
 
   .controls-container {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    gap: 1em;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 3rem;
+    gap: 1.5em;
   }
 
   .search-container {
     flex-grow: 1;
+    min-width: 250px;
   }
 
   input[type="text"] {
     width: 100%;
-    padding: 0.5em;
+    padding: 0.75em 1.25em;
     font-size: 1rem;
+    font-family: var(--font-ui);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 8px;
     background-color: var(--background-color);
     color: var(--text-color);
+    transition: all 0.2s ease;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 3px var(--glow-color);
   }
 
   .sort-container, .canon-container {
     display: flex;
     align-items: center;
-    gap: 0.5em;
+    gap: 0.75em;
+  }
+
+  .sort-container label, .canon-container label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    opacity: 0.8;
   }
 
   select {
-    padding: 0.5em;
-    font-size: 1rem;
+    padding: 0.75em 2em 0.75em 1em;
+    font-size: 0.95rem;
+    font-family: var(--font-ui);
     border: 1px solid var(--border-color);
-    border-radius: 4px;
+    border-radius: 8px;
     background-color: var(--background-color);
     color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  select:focus {
+    outline: none;
+    border-color: var(--link-color);
+    box-shadow: 0 0 0 3px var(--glow-color);
   }
 
   .book-list {
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    gap: 3rem;
   }
 
   .testament-group {
+    background-color: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1em;
+    box-shadow: var(--card-shadow);
+    border-radius: 16px;
+    padding: 2.25rem;
   }
 
   .testament-title {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
     color: var(--text-color);
-    margin: 0 0 1em 0;
+    margin: 0 0 2rem 0;
     text-align: center;
+    position: relative;
+    padding-bottom: 0.5rem;
+  }
+
+  .testament-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 3px;
+    background-color: var(--link-color);
+    border-radius: 2px;
   }
 
   .books {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1em;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.25rem;
   }
 
   @media (min-width: 1200px) {
     .books {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
   }
 
   .book-link {
     display: block;
-    padding: 1em;
+    padding: 1.25rem 1rem;
     text-align: center;
+    background-color: var(--background-color);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 10px;
     text-decoration: none;
     color: var(--text-color);
-    transition: background-color 0.2s, color 0.2s;
+    font-weight: 500;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .book-link:hover {
-    background-color: var(--text-color);
-    color: var(--background-color);
+    background-color: var(--background-color);
+    border-color: var(--link-color);
+    color: var(--link-color);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px var(--glow-color);
   }
 
   .no-results {
     text-align: center;
-    padding: 3em;
-    border: 1px dashed var(--border-color);
-    border-radius: 8px;
+    padding: 4rem 2rem;
+    border: 2px dashed var(--border-color);
+    border-radius: 16px;
     color: var(--text-color);
     font-size: 1.2rem;
+    background-color: var(--card-bg);
+    box-shadow: var(--card-shadow);
   }
 
   .book-link.disabled {
-    background-color: var(--border-color);
-    color: #999;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    opacity: 0.35;
     cursor: not-allowed;
-    opacity: 0.6;
     border: 1px dashed var(--border-color);
+    font-style: italic;
+  }
+
+  .book-link.disabled:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border-color);
   }
 </style>

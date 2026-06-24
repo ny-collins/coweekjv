@@ -1,39 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Outfit:wght@300..700&display=swap');
+
 :root {
-  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-serif: 'Lora', Georgia, 'Times New Roman', serif;
   --font-size: 16px;
 
-  --background-color: #fff;
-  --background-color-transparent: rgba(255, 255, 255, 0.8);
-  --text-color: #333;
-  --link-color: #007bff;
-  --border-color: #ddd;
+  --background-color: #fcfaf6;
+  --background-color-transparent: rgba(252, 250, 246, 0.85);
+  --text-color: #2c2a29;
+  --link-color: #8b1e0f;
+  --border-color: #e6e0d5;
+  --card-bg: #ffffff;
+  --card-shadow: 0 4px 20px rgba(139, 30, 15, 0.05);
+  --accent-color: #d97706;
+  --glow-color: rgba(217, 119, 6, 0.12);
 }
 
 .dark-mode {
-  --background-color: #121212;
-  --background-color-transparent: rgba(18, 18, 18, 0.8);
-  --text-color: #fff;
-  --link-color: #90caf9;
-  --border-color: #333;
+  --background-color: #0c0e14;
+  --background-color-transparent: rgba(12, 14, 20, 0.85);
+  --text-color: #e2e8f0;
+  --link-color: #e2b13c;
+  --border-color: #1e293b;
+  --card-bg: #151923;
+  --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --accent-color: #e2b13c;
+  --glow-color: rgba(226, 177, 60, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.1s ease;
 }
 
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: var(--font-family);
+  font-family: var(--font-ui);
   font-size: var(--font-size);
   margin: 0;
   padding: 0;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   color: var(--link-color);
   text-decoration: none;
+  font-weight: 500;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--text-color);
 }
 
 main {
-  padding: 2em;
-  max-width: 800px;
+  padding: 2.5em 1.5em;
+  max-width: 900px;
   margin: 0 auto;
 }
 
@@ -41,4 +67,24 @@ main {
   main {
     max-width: 1600px;
   }
+}
+
+/* Custom Scrollbar for Premium Feel */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-color);
+  opacity: 0.5;
 }
