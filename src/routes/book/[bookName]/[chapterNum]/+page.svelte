@@ -32,6 +32,14 @@
     highlightedVerses = new Set(highlightedVerses); // trigger reactivity
   }
 
+  // Handle verse keyboard interactions for accessibility
+  function handleVerseKeyDown(event, verseNum) {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleVerseHighlight(verseNum);
+    }
+  }
+
   // Clear selection
   function clearSelection() {
     highlightedVerses = new Set();
@@ -218,6 +226,9 @@
         id="v-{verse.verse}" 
         class:highlighted={highlightedVerses.has(verse.verse)}
         onclick={() => toggleVerseHighlight(verse.verse)}
+        onkeydown={(e) => handleVerseKeyDown(e, verse.verse)}
+        role="button"
+        tabindex="0"
       >
         <span class="verse-num">{verse.verse}</span>
         {verse.text}
