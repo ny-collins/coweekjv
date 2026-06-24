@@ -28,7 +28,16 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => cache.addAll(ASSETS_TO_CACHE))
+      .then(async (cache) => {
+        // Safe pre-caching: cache assets individually to prevent the entire process 
+        // from failing if a single resource fails to load (e.g. static server returning 404 for some files).
+        const promises = ASSETS_TO_CACHE.map((asset) => {
+          return cache.add(asset).catch((err) => {
+            console.warn(`[ServiceWorker] Skipping pre-cache for asset: ${asset}`, err);
+          });
+        });
+        await Promise.all(promises);
+      })
       .then(() => {
         self.skipWaiting();
       })
