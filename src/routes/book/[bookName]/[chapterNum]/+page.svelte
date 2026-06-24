@@ -222,8 +222,9 @@
 <div class="chapter-container">
   <article class="scripture-card">
     {#each data.verses as verse}
-      <p 
+      <div 
         id="v-{verse.verse}" 
+        class="verse"
         class:highlighted={highlightedVerses.has(verse.verse)}
         onclick={() => toggleVerseHighlight(verse.verse)}
         onkeydown={(e) => handleVerseKeyDown(e, verse.verse)}
@@ -232,7 +233,7 @@
       >
         <span class="verse-num">{verse.verse}</span>
         {verse.text}
-      </p>
+      </div>
     {/each}
   </article>
 
@@ -503,7 +504,7 @@
     border-color: var(--link-color);
   }
 
-  .scripture-card p {
+  .verse {
     font-family: var(--font-serif);
     font-size: 1.2rem;
     line-height: 2.1;
@@ -513,17 +514,29 @@
     border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.2s ease, transform 0.15s ease;
+    outline: none; /* remove default blue focus outline for custom aesthetic */
   }
 
-  .scripture-card p:hover {
+  .verse:hover {
     background-color: rgba(0, 0, 0, 0.02);
   }
 
-  :global(.dark-mode) .scripture-card p:hover {
+  :global(.dark-mode) .verse:hover {
     background-color: rgba(255, 255, 255, 0.02);
   }
 
-  .scripture-card p.highlighted {
+  /* Focus indicator for keyboard navigation */
+  .verse:focus-visible {
+    background-color: rgba(0, 0, 0, 0.03);
+    box-shadow: inset 2px 0 0 var(--accent-color);
+  }
+
+  :global(.dark-mode) .verse:focus-visible {
+    background-color: rgba(255, 255, 255, 0.03);
+    box-shadow: inset 2px 0 0 var(--accent-color);
+  }
+
+  .verse.highlighted {
     background-color: var(--glow-color);
     box-shadow: inset 4px 0 0 var(--accent-color);
   }
@@ -671,7 +684,7 @@
   }
 
   @media (max-width: 600px) {
-    .scripture-card p {
+    .verse {
       font-size: 1.1rem;
       line-height: 1.95;
       padding: 0.4rem 0.5rem 0.4rem 2rem;
