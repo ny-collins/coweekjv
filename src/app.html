@@ -47,6 +47,28 @@
             else if (savedTheme === 'dark' || isDark) themeColor = '#0c0e14';
             meta.setAttribute('content', themeColor);
           }
+          // Define global splash dismissal helpers
+          window.dismissSplash = function() {
+            var splash = document.getElementById('app-splash-screen');
+            if (splash) {
+              splash.style.opacity = '0';
+              setTimeout(function() {
+                splash.style.visibility = 'hidden';
+                splash.remove();
+              }, 300);
+            }
+          };
+
+          window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+              var splash = document.getElementById('app-splash-screen');
+              if (splash) {
+                event.preventDefault();
+                window.dismissSplash();
+              }
+            }
+          });
+
           // Adapt splash screen style instantly to prevent bright flash
           window.addEventListener('DOMContentLoaded', function() {
             var splash = document.getElementById('app-splash-screen');
@@ -59,6 +81,8 @@
               splash.style.backgroundColor = bg;
               var text = splash.querySelector('h2');
               if (text) text.style.color = tc;
+              var skipBtn = splash.querySelector('#splash-skip-btn');
+              if (skipBtn) skipBtn.style.color = tc;
             }
           });
         } catch (e) {}
@@ -133,9 +157,30 @@
           background: linear-gradient(to right, #fbbf24, #f59e0b);
           width: 0%;
           border-radius: 2px;
-          animation: splashProgress 1.2s cubic-bezier(0.1, 0.8, 0.25, 1) forwards;
+          animation: splashProgress 2.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
         "></div>
       </div>
+      
+      <!-- Subtle Skip Button (Not attracting attention, ESC key bound) -->
+      <button id="splash-skip-btn" onclick="window.dismissSplash()" style="
+        position: absolute;
+        bottom: 2rem;
+        background: transparent;
+        border: 1px solid currentColor;
+        color: #2c2a29;
+        opacity: 0.35;
+        padding: 0.35rem 0.85rem;
+        font-family: system-ui, -apple-system, sans-serif;
+        font-size: 0.75rem;
+        font-weight: 600;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: opacity 0.2s, background-color 0.2s, color 0.3s;
+        outline: none;
+      " onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.35'">
+        Skip
+      </button>
+
       <style>
         @keyframes splashPulse {
           0%, 100% { transform: scale(1); opacity: 0.9; }
@@ -146,7 +191,6 @@
           100% { width: 100%; }
         }
       </style>
-    </div>
     <div id="svelte">%sveltekit.body%</div>
   </body>
 </html>

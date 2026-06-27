@@ -4,9 +4,20 @@
   import { SITE_URL } from '$lib/site';
   import { page } from '$app/stores';
   import { fade } from 'svelte/transition';
+  import { goto } from '$app/navigation';
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import '../app.css';
+
+  function handleGlobalKeyDown(event) {
+    if (event.key === 'Escape') {
+      const splash = document.getElementById('app-splash-screen');
+      if (!splash && $page.url.pathname !== '/') {
+        event.preventDefault();
+        goto('/');
+      }
+    }
+  }
 
   let { children } = $props();
   let showUpdateToast = $state(false);
@@ -16,7 +27,7 @@
     // 0. Fade out and remove the instant PWA splash screen
     const splash = document.getElementById('app-splash-screen');
     if (splash) {
-      const minDuration = 1200; // Enforce a 1.2s minimum display time for visual branding presence
+      const minDuration = 2500; // Enforce a 2.5s minimum display time for visual branding presence
       const elapsedTime = Date.now() - (window.appStartTime || Date.now());
       const delay = Math.max(0, minDuration - elapsedTime);
 
@@ -87,6 +98,8 @@
 <svelte:head>
   <meta property="og:url" content={`${SITE_URL}/`} />
 </svelte:head>
+
+<svelte:window onkeydown={handleGlobalKeyDown} />
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
