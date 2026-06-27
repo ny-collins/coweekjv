@@ -165,6 +165,7 @@
 </svelte:head>
 
 <div class="title-container">
+  <img src="/favicon/favicon.svg" class="home-logo" alt="Cowee KJV Logo" />
   <h1 class="title">The Holy Bible</h1>
   <p class="subtitle">King James Version</p>
 </div>
@@ -283,6 +284,18 @@
     text-align: center;
     margin-bottom: 3.5rem;
     padding-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 18px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    display: inline-block;
   }
 
   .title {

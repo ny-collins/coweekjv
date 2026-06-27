@@ -182,7 +182,10 @@
 
 <header class:header-hidden={isHeaderHidden}>
   <nav>
-    <a href="/" class="logo" onclick={() => showSettings = false}>Cowee KJV</a>
+    <a href="/" class="logo" onclick={() => showSettings = false}>
+      <img src="/favicon/favicon.svg" class="header-logo" alt="" />
+      <span>Cowee KJV</span>
+    </a>
     <div class="controls">
       {#if showInstallButton}
         <button onclick={installApp} class="install-btn" aria-label="Install Cowee KJV App">
@@ -274,10 +277,21 @@
     color: var(--text-color);
     text-decoration: none;
     transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .logo:hover {
     color: var(--link-color);
+  }
+
+  .header-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: inline-block;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   }
 
   .controls {

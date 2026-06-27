@@ -13,6 +13,16 @@
   let registration = null;
 
   onMount(() => {
+    // 0. Fade out and remove the instant PWA splash screen
+    const splash = document.getElementById('app-splash-screen');
+    if (splash) {
+      splash.style.opacity = '0';
+      setTimeout(() => {
+        splash.style.visibility = 'hidden';
+        splash.remove();
+      }, 300);
+    }
+
     // 1. Recover gracefully if a dynamic chunk preloading fails (common during deployments)
     const handlePreloadError = () => {
       console.warn('Chunk loading failed, reloading page to fetch latest build...');

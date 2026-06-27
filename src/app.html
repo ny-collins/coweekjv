@@ -24,8 +24,15 @@
       (function() {
         try {
           var isDark = localStorage.getItem('darkMode') === 'true';
+          const savedTheme = localStorage.getItem('selectedTheme');
+          if (savedTheme) {
+            isDark = (savedTheme === 'dark' || savedTheme === 'slate');
+          }
           if (isDark) {
             document.documentElement.classList.add('dark-mode');
+          }
+          if (savedTheme && savedTheme !== 'light') {
+            document.documentElement.classList.add(savedTheme + '-mode');
           }
           var fontSize = localStorage.getItem('fontSize');
           if (fontSize) {
@@ -33,14 +40,86 @@
           }
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta) {
-            meta.setAttribute('content', isDark ? '#0c0e14' : '#fcfaf6');
+            var themeColor = '#fcfaf6';
+            if (savedTheme === 'sepia') themeColor = '#f4ecd8';
+            else if (savedTheme === 'slate') themeColor = '#0f172a';
+            else if (savedTheme === 'dark' || isDark) themeColor = '#0c0e14';
+            meta.setAttribute('content', themeColor);
           }
+          // Adapt splash screen style instantly to prevent bright flash
+          window.addEventListener('DOMContentLoaded', function() {
+            var splash = document.getElementById('app-splash-screen');
+            if (splash) {
+              var bg = '#fcfaf6';
+              var tc = '#2c2a29';
+              if (savedTheme === 'sepia') { bg = '#f4ecd8'; tc = '#5c4033'; }
+              else if (savedTheme === 'slate') { bg = '#0f172a'; tc = '#cbd5e1'; }
+              else if (savedTheme === 'dark' || isDark) { bg = '#0c0e14'; tc = '#e2e8f0'; }
+              splash.style.backgroundColor = bg;
+              var text = splash.querySelector('h2');
+              if (text) text.style.color = tc;
+            }
+          });
         } catch (e) {}
       })();
     </script>
     %sveltekit.head%
   </head>
   <body>
+    <!-- Instant PWA Splash Screen -->
+    <div id="app-splash-screen" style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #fcfaf6;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.3s ease, visibility 0.3s;
+    ">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 110px; height: 110px; animation: splashPulse 2s infinite ease-in-out;">
+        <defs>
+          <linearGradient id="splash-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24" />
+            <stop offset="50%" stop-color="#f59e0b" />
+            <stop offset="100%" stop-color="#b45309" />
+          </linearGradient>
+        </defs>
+        <path d="M 380 132 A 180 180 0 1 0 380 380" stroke="url(#splash-gold-grad)" stroke-width="24" stroke-linecap="round" fill="none" />
+        <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325 Z" fill="url(#splash-gold-grad)" opacity="0.15" />
+        <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325" stroke="url(#splash-gold-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325 Z" fill="url(#splash-gold-grad)" opacity="0.15" />
+        <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325" stroke="url(#splash-gold-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <line x1="256" y1="190" x2="256" y2="325" stroke="url(#splash-gold-grad)" stroke-width="12" stroke-linecap="round" />
+        <path d="M 256 220 Q 220 195 180 210" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 220 Q 292 195 332 210" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 250 Q 220 225 180 240" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 250 Q 292 225 332 240" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 280 Q 220 255 180 270" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 280 Q 292 255 332 270" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+      </svg>
+      <h2 style="
+        font-family: system-ui, -apple-system, sans-serif;
+        color: #2c2a29;
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-top: 1.25rem;
+        letter-spacing: -0.02em;
+        transition: color 0.3s;
+      ">Cowee KJV</h2>
+      <style>
+        @keyframes splashPulse {
+          0%, 100% { transform: scale(1); opacity: 0.9; }
+          50% { transform: scale(1.04); opacity: 1; filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.25)); }
+        }
+      </style>
+    </div>
     <div id="svelte">%sveltekit.body%</div>
   </body>
 </html>
