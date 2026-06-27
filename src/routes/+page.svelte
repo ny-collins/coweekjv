@@ -164,10 +164,16 @@
   </script>
 </svelte:head>
 
-<div class="title-container">
-  <img src="/favicon/favicon.svg" class="home-logo" alt="Cowee KJV Logo" />
-  <h1 class="title">The Holy Bible</h1>
-  <p class="subtitle">King James Version</p>
+<div class="brand-hero-header">
+  <div class="brand-side">
+    <img src="/favicon/favicon.svg" class="hero-logo" alt="Cowee KJV Logo" />
+    <span class="brand-name">Cowee KJV</span>
+  </div>
+  <div class="divider-pipe" aria-hidden="true"></div>
+  <div class="title-side">
+    <h1 class="hero-title">The Holy Bible</h1>
+    <p class="hero-subtitle">King James Version</p>
+  </div>
 </div>
 
 {#if recentlyRead.length > 0 || bookmarks.length > 0}
@@ -275,45 +281,107 @@
   </div>
 {:else}
   <div class="no-results">
+    <svg class="watermark-logo" viewBox="0 0 512 512" aria-hidden="true">
+      <path d="M 380 132 A 180 180 0 1 0 380 380" stroke="currentColor" stroke-width="24" stroke-linecap="round" fill="none" />
+      <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      <line x1="256" y1="190" x2="256" y2="325" stroke="currentColor" stroke-width="12" stroke-linecap="round" />
+      <path d="M 256 220 Q 220 195 180 210" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
+      <path d="M 256 220 Q 292 195 332 210" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
+      <path d="M 256 250 Q 220 225 180 240" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
+      <path d="M 256 250 Q 292 225 332 240" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
+      <path d="M 256 280 Q 220 255 180 270" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
+      <path d="M 256 280 Q 292 255 332 270" stroke="currentColor" stroke-width="6" stroke-linecap="round" fill="none" />
+    </svg>
     <p>No books found matching "{searchTerm}"</p>
   </div>
 {/if}
 
 <style>
-  .title-container {
-    text-align: center;
-    margin-bottom: 3.5rem;
-    padding-top: 1rem;
+  .brand-hero-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    margin-bottom: 4rem;
+    padding-top: 1.5rem;
+  }
+
+  .brand-side {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 0.75rem;
   }
 
-  .home-logo {
-    width: 80px;
-    height: 80px;
+  .hero-logo {
+    width: 84px;
+    height: 84px;
     border-radius: 18px;
-    margin-bottom: 1.25rem;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    display: inline-block;
   }
 
-  .title {
-    font-size: 3.5rem;
+  .brand-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-color);
+    letter-spacing: -0.02em;
+  }
+
+  .divider-pipe {
+    width: 1.5px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--border-color) 20%, var(--border-color) 80%, transparent);
+    opacity: 0.6;
+  }
+
+  .title-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .hero-title {
+    font-size: 3rem;
     font-weight: 800;
     color: var(--text-color);
     margin: 0;
     letter-spacing: -0.03em;
+    line-height: 1.1;
   }
 
-  .subtitle {
-    font-size: 0.95rem;
+  .hero-subtitle {
+    font-size: 0.9rem;
     font-weight: 600;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: var(--link-color);
-    margin: 0.75rem 0 0 0;
-    opacity: 0.9;
+    color: var(--text-color);
+    opacity: 0.65;
+    margin: 0.25rem 0 0 0;
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 5rem 1rem;
+    color: var(--text-color);
+    opacity: 0.8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .watermark-logo {
+    width: 140px;
+    height: 140px;
+    color: var(--text-color);
+    opacity: 0.12;
+    display: block;
+    transition: color 0.3s;
   }
 
   .controls-container {
@@ -480,16 +548,30 @@
 
   /* Responsive Adjustments for Mobile Devices */
   @media (max-width: 768px) {
-    .title-container {
+    .brand-hero-header {
+      flex-direction: column;
+      gap: 1.5rem;
+      text-align: center;
       margin-bottom: 2.25rem;
       padding-top: 0.5rem;
     }
 
-    .title {
-      font-size: 2.5rem;
+    .divider-pipe {
+      width: 60px;
+      height: 1.5px;
+      background: linear-gradient(to right, transparent, var(--border-color) 20%, var(--border-color) 80%, transparent);
     }
 
-    .subtitle {
+    .title-side {
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-size: 2.25rem;
+    }
+
+    .hero-subtitle {
       font-size: 0.85rem;
       letter-spacing: 0.2em;
     }

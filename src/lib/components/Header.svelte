@@ -28,6 +28,8 @@
   };
 
   let lastScrollY = 0;
+  let scrollProgress = $state(0);
+  let drawnPart = $derived(848 + (283 * (scrollProgress / 100)));
 
   onMount(() => {
     // 1. Initial State Loading
@@ -60,6 +62,15 @@
     // 2. Event Listeners
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      
+      // Calculate scroll progress percentage (only dynamic if document is scrollable)
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (docHeight > 0) {
+        scrollProgress = Math.min(100, Math.max(0, (scrollY / docHeight) * 100));
+      } else {
+        scrollProgress = 0;
+      }
+
       // Close dropdown on scroll
       if (Math.abs(scrollY - lastScrollY) > 20) {
         showSettings = false;
@@ -183,7 +194,35 @@
 <header class:header-hidden={isHeaderHidden}>
   <nav>
     <a href="/" class="logo" onclick={() => showSettings = false}>
-      <img src="/favicon/favicon.svg" class="header-logo" alt="" />
+      <svg class="header-logo" viewBox="0 0 512 512" aria-hidden="true">
+        <defs>
+          <linearGradient id="header-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24" />
+            <stop offset="50%" stop-color="#f59e0b" />
+            <stop offset="100%" stop-color="#b45309" />
+          </linearGradient>
+        </defs>
+        
+        <!-- Dynamic Progress Monogram Circle (starts at 75% for "C", grows to 100%) -->
+        <circle cx="256" cy="256" r="180" fill="none" stroke="url(#header-gold-grad)" stroke-width="32" stroke-linecap="round" transform="rotate(-225 256 256)" stroke-dasharray="{drawnPart} 1131" />
+        
+        <!-- Open Book Pages (Translucent background) -->
+        <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325 Z" fill="url(#header-gold-grad)" opacity="0.15" />
+        <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325" stroke="url(#header-gold-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325 Z" fill="url(#header-gold-grad)" opacity="0.15" />
+        <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325" stroke="url(#header-gold-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        
+        <!-- Spine -->
+        <line x1="256" y1="190" x2="256" y2="325" stroke="url(#header-gold-grad)" stroke-width="14" stroke-linecap="round" />
+        
+        <!-- Nested Page details -->
+        <path d="M 256 220 Q 220 195 180 210" stroke="url(#header-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 220 Q 292 195 332 210" stroke="url(#header-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 250 Q 220 225 180 240" stroke="url(#header-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 250 Q 292 225 332 240" stroke="url(#header-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 280 Q 220 255 180 270" stroke="url(#header-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 280 Q 292 255 332 270" stroke="url(#header-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+      </svg>
       <span>Cowee KJV</span>
     </a>
     <div class="controls">
