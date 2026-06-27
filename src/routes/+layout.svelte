@@ -10,21 +10,61 @@
 
   let { children } = $props();
   let showUpdateToast = $state(false);
+  let registration = null;
 
   onMount(() => {
+    // 1. Recover gracefully if a dynamic chunk preloading fails (common during deployments)
+    const handlePreloadError = () => {
+      console.warn('Chunk loading failed, reloading page to fetch latest build...');
+      window.location.reload();
+    };
+    window.addEventListener('vite:preloadError', handlePreloadError);
+
+    // 2. Service Worker Registration Lifecycle
     if (!('serviceWorker' in navigator) || dev) return;
 
-    navigator.serviceWorker.register('/service-worker.js').catch((err) => {
-      console.warn('[ServiceWorker] Registration failed:', err);
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => {
+        registration = reg;
+
+        // Check if there is already a service worker waiting in the background
+        if (registration.waiting) {
+          showUpdateToast = true;
+        }
+
+        // Listen for new service workers installing
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          if (newWorker) {
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // New worker is installed and waiting to take over
+                showUpdateToast = true;
+              }
+            });
+          }
+        });
+      })
+      .catch((err) => {
+        console.warn('[ServiceWorker] Registration failed:', err);
+      });
+
+    // When the new worker takes control, trigger page reload to fetch latest assets
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      window.location.reload();
     });
 
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      showUpdateToast = true;
-    });
+    return () => {
+      window.removeEventListener('vite:preloadError', handlePreloadError);
+    };
   });
 
   function reloadPage() {
-    window.location.reload();
+    if (registration && registration.waiting) {
+      registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+    } else {
+      window.location.reload();
+    }
   }
 </script>
 
