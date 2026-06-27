@@ -1,5 +1,7 @@
 <script>
+  import { dev } from '$app/environment';
   import { onMount } from 'svelte';
+  import { SITE_URL } from '$lib/site';
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import '../app.css';
@@ -8,17 +10,25 @@
   let showUpdateToast = $state(false);
 
   onMount(() => {
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        showUpdateToast = true;
-      });
-    }
+    if (!('serviceWorker' in navigator) || dev) return;
+
+    navigator.serviceWorker.register('/service-worker.js').catch((err) => {
+      console.warn('[ServiceWorker] Registration failed:', err);
+    });
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      showUpdateToast = true;
+    });
   });
 
   function reloadPage() {
     window.location.reload();
   }
 </script>
+
+<svelte:head>
+  <meta property="og:url" content={`${SITE_URL}/`} />
+</svelte:head>
 
 <a href="#main-content" class="skip-link">Skip to main content</a>
 

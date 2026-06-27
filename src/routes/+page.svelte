@@ -1,17 +1,69 @@
 <script>
   import { onMount } from 'svelte';
+  import { browser } from '$app/environment';
+  import { SITE_URL } from '$lib/site';
 
   let { data } = $props();
+  const defaultCanon = 'protestant';
   let searchTerm = $state('');
   let sortOrder = $state('canonical');
-  let selectedCanon = $state(data.canon);
+  let selectedCanon = $state(defaultCanon);
+
+  onMount(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlCanon = urlParams.get('canon');
+    
+    if (!urlCanon) {
+      const savedCanon = localStorage.getItem('selectedCanon');
+      if (savedCanon && data.collections[savedCanon]) {
+        selectedCanon = savedCanon;
+      }
+    } else {
+      localStorage.setItem('selectedCanon', urlCanon);
+    }
+    
+    const savedSort = localStorage.getItem('selectedSort');
+    if (savedSort && ['canonical', 'alphabetical', 'chronological'].includes(savedSort)) {
+      sortOrder = savedSort;
+    }
+  });
+
+  $effect(() => {
+    if (!browser) return;
+    localStorage.setItem('selectedCanon', selectedCanon);
+  });
+
+  $effect(() => {
+    if (!browser) return;
+    localStorage.setItem('selectedSort', sortOrder);
+  });
 
   $effect(() => {
     selectedCanon = data.canon;
   });
 
+  $effect(() => {
+    if (!browser) return;
+
+    const safeCanon = data.collections[selectedCanon] ? selectedCanon : defaultCanon;
+
+    if (safeCanon !== selectedCanon) {
+      selectedCanon = safeCanon;
+      return;
+    }
+
+    const url = new URL(window.location.href);
+    if (url.searchParams.get('canon') === safeCanon) return;
+
+    url.searchParams.set('canon', safeCanon);
+    const nextUrl = `${url.pathname}?${url.searchParams.toString()}${url.hash}`;
+    history.replaceState(history.state, '', nextUrl);
+  });
+
+  let canonBooks = $derived((data.collections[selectedCanon] ?? data.collections[defaultCanon]).books);
+
   let availableBooks = $derived(
-    data.collections[selectedCanon].books.map(name => data.books.find(b => b.name === name)).filter(Boolean)
+    canonBooks.map(name => data.books.find(b => b.name === name)).filter(Boolean)
   );
 
   let filteredBooks = $derived(availableBooks.filter(book =>
@@ -29,13 +81,20 @@
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "KJV Bible",
-    "url": "https://kjv-bible-7mw.pages.dev/"
+    "url": `${SITE_URL}/`
   });
 </script>
 
 <svelte:head>
   <title>KJV Bible</title>
   <meta name="description" content="Read the King James Version of the Bible online." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="KJV Bible" />
+  <meta property="og:description" content="Read the King James Version of the Bible online." />
+  <meta property="og:url" content={`${SITE_URL}/`} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="KJV Bible" />
+  <meta name="twitter:description" content="Read the King James Version of the Bible online." />
   <script type="application/ld+json">
     {JSON.stringify(structuredData)}
   </script>

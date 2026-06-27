@@ -16,7 +16,7 @@
   "orthodox": {
     "name": "Orthodox Canon",
     "books": [
-      "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1Samuel", "2Samuel", "1Kings", "2Kings", "1Chronicles", "2Chronicles", "1Esdras", "Ezra", "Nehemiah", "Tobit", "Judith", "Esther", "1Maccabees", "2Maccabees", "3Maccabees", "Job", "Psalms", "PrayerofManasseh", "Proverbs", "Ecclesiastes", "SongofSolomon", "WisdomofSolomon", "Ecclesiasticus", "Isaiah", "Jeremiah", "Lamentations", "Baruch", "LetterofJeremiah", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi",
+      "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1Samuel", "2Samuel", "1Kings", "2Kings", "1Chronicles", "2Chronicles", "1Esdras", "Ezra", "Nehemiah", "Tobit", "Judith", "Esther", "1Maccabees", "2Maccabees", "Job", "Psalms", "PrayerofManasseh", "Proverbs", "Ecclesiastes", "SongofSolomon", "WisdomofSolomon", "Ecclesiasticus", "Isaiah", "Jeremiah", "Lamentations", "Baruch", "LetterofJeremiah", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi",
       "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1Corinthians", "2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1Thessalonians", "2Thessalonians", "1Timothy", "2Timothy", "Titus", "Philemon", "Hebrews", "James", "1Peter", "2Peter", "1John", "2John", "3John", "Jude", "Revelation"
     ]
   },
@@ -25,7 +25,7 @@
     "books": [
       "Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy", "Joshua", "Judges", "Ruth", "1Samuel", "2Samuel", "1Kings", "2Kings", "1Chronicles", "2Chronicles", "Ezra", "Nehemiah", "Esther", "Job", "Psalms", "Proverbs", "Ecclesiastes", "SongofSolomon", "Isaiah", "Jeremiah", "Lamentations", "Ezekiel", "Daniel", "Hosea", "Joel", "Amos", "Obadiah", "Jonah", "Micah", "Nahum", "Habakkuk", "Zephaniah", "Haggai", "Zechariah", "Malachi",
       "Matthew", "Mark", "Luke", "John", "Acts", "Romans", "1Corinthians", "2Corinthians", "Galatians", "Ephesians", "Philippians", "Colossians", "1Thessalonians", "2Thessalonians", "1Timothy", "2Timothy", "Titus", "Philemon", "Hebrews", "James", "1Peter", "2Peter", "1John", "2John", "3John", "Jude", "Revelation",
-      "1Esdras", "2Esdras", "Tobit", "Judith", "WisdomofSolomon", "Ecclesiasticus", "Baruch", "LetterofJeremiah", "PrayerofAzariah", "Susanna", "BelandtheDragon", "PrayerofManasseh", "1Maccabees", "2Maccabees", "3Maccabees"
+      "1Esdras", "2Esdras", "Tobit", "Judith", "WisdomofSolomon", "Ecclesiasticus", "Baruch", "LetterofJeremiah", "PrayerofAzariah", "Susanna", "BelandtheDragon", "PrayerofManasseh", "1Maccabees", "2Maccabees"
     ]
   }
 }

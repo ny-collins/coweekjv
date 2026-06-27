@@ -10,7 +10,6 @@ A live deployment of the application is available at: https://kjv-bible-7mw.page
 
 ### Comprehensive Canon Filtering
 * **Dynamic Canon Support**: Users can filter books dynamically by Protestant Canon, Catholic Canon, Orthodox Canon, or view the Full Collection (All Books).
-* **Graceful Missing Book Handling**: Works that are listed in historical canons but do not have digitised text (such as 3 Maccabees in the Apocrypha) are rendered as disabled cards to preserve structural completeness without introducing dead links.
 
 ### Advanced Navigation
 * **Continuous Cross-Book Navigation**: Allows readers to navigate seamlessly from the last chapter of a book to the first chapter of the next canonical book, or from the first chapter of a book to the last chapter of the preceding one.
@@ -34,16 +33,17 @@ A live deployment of the application is available at: https://kjv-bible-7mw.page
 The application is built on top of SvelteKit using the static adapter to produce a fully pre-rendered site, facilitating instant load times and compatibility with static hosting providers (such as Cloudflare Pages or GitHub Pages).
 
 ### File Structure
-* `src/routes/+layout.svelte`: Core wrapper containing persistent header controls (Theme selector, font-size controls, installation button) and service worker state management.
+* `src/routes/+layout.svelte`: Core wrapper containing persistent header controls (Theme selector, font-size controls, installation button), runtime service worker registration, and update toast state management.
 * `src/routes/+page.svelte`: Home page. Contains the primary search query logic, sorting options (canonical or chronological order), canon filter, and the responsive grid of books.
 * `src/routes/book/[bookName]/+page.svelte`: Mid-level index page displaying the available chapters for a selected book.
 * `src/routes/book/[bookName]/[chapterNum]/+page.svelte`: Primary reading layout displaying the chapter scriptures, navigation buttons, and verse actions.
 * `src/routes/sitemap.xml/+server.js`: Automatically generates a search engine indexable XML sitemap listing all book and chapter URLs dynamically.
+* `src/lib/site.js`: Central source for the deployment base URL used by sitemap and structured metadata (`PUBLIC_SITE_URL` with fallback).
 * `src/service-worker.js`: Handles network proxy caching, static file indexing, and updates cache structures when new builds are deployed.
 * `src/lib/data/`: Houses the text of the Bible parsed into isolated book JSON chunks, alongside canonical mappings and metadata in `BooksWithMetadata.json`.
 
 ### Static Pre-rendering Optimization
-To avoid runtime overhead and network delays, SvelteKit pre-renders all routes at build time. The `entries()` API resolves the list of all valid books and chapters in `O(1)` time by reading from a unified static metadata structure (`BooksWithMetadata.json`), eliminating filesystem globs or dynamic disk reads during the compiler step.
+To avoid runtime overhead and network delays, SvelteKit pre-renders all routes at build time. The `entries()` APIs resolve valid books and chapters by iterating over the unified metadata structure (`BooksWithMetadata.json`) in memory, eliminating filesystem globs or dynamic disk reads during the compiler step.
 
 ### Chronological Sorting Order
 When sorting chronologically, the application resolves composition timeline boundaries using composition estimates. If two books share the same approximate chronological era, a stable canonical sorting fallback is applied:
@@ -57,7 +57,7 @@ return difference !== 0 ? difference : a.canonicalOrder - b.canonicalOrder;
 ## Getting Started
 
 ### Prerequisites
-* Node.js (version 20 or higher)
+* Node.js (version 20.19+ or 22.12+)
 * npm (Node Package Manager)
 
 ### Installation
@@ -75,12 +75,18 @@ npm run dev
 ```
 The application will be accessible at `http://localhost:5173`.
 
+Optional: set a deployment URL for sitemap and structured metadata generation.
+```bash
+PUBLIC_SITE_URL=https://your-domain.example npm run build
+```
+
 ### Production Build and Deployment
 Build the static site output:
 ```bash
 npm run build
 ```
 This command compiles Svelte components, resolves prerendered static pages, registers the Service Worker, and saves the output directory as `build/`.
+Service worker registration is performed at runtime from the app layout (in production only).
 
 To preview the built static output locally:
 ```bash

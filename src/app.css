@@ -30,7 +30,6 @@
 
 * {
   box-sizing: border-box;
-  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.1s ease;
 }
 
 body {
@@ -43,6 +42,14 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.1s ease;
+}
+
+/* Targeted transitions on primary theme elements to avoid global rendering bottleneck */
+header, footer, main, select, input, button, a, 
+.book-link, .chapter-link, .verse, .scripture-card, .testament-group, 
+.chapter-sticky-header, .floating-toolbar, .quick-nav-card {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.1s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 a {

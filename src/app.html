@@ -18,7 +18,6 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="KJV Reader">
     <meta property="og:description" content="A direct-forward, minimalist King James Version Bible.">
-    <meta property="og:url" content="https://kjv-bible-7mw.pages.dev/">
     <meta name="twitter:card" content="summary">
 
     <script>
@@ -31,6 +30,10 @@
           var fontSize = localStorage.getItem('fontSize');
           if (fontSize) {
             document.documentElement.style.setProperty('--font-size', fontSize + 'px');
+          }
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) {
+            meta.setAttribute('content', isDark ? '#0c0e14' : '#fcfaf6');
           }
         } catch (e) {}
       })();

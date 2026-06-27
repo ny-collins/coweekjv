@@ -1,4 +1,6 @@
 <script>
+  import { SITE_URL } from '$lib/site';
+
   let { data } = $props();
 
   let structuredData = $derived({
@@ -15,6 +17,13 @@
 <svelte:head>
   <title>{data.displayName} | KJV Bible</title>
   <meta name="description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={`${data.displayName} | KJV Bible`} />
+  <meta property="og:description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
+  <meta property="og:url" content={`${SITE_URL}/book/${data.bookName}`} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={`${data.displayName} | KJV Bible`} />
+  <meta name="twitter:description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
   {#if data.chapters}
     <script type="application/ld+json">
       {JSON.stringify(structuredData)}

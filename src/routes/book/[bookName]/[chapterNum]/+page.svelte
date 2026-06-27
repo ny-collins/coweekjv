@@ -1,8 +1,93 @@
 <script>
   import { onMount } from 'svelte';
   import { fly } from 'svelte/transition';
+  import { SITE_URL } from '$lib/site';
+  import { browser } from '$app/environment';
+  import booksWithMetadata from '$lib/data/BooksWithMetadata.json';
+  import collections from '$lib/data/collections.json';
 
   let { data } = $props();
+
+  let activeCanon = $state('protestant');
+  let activeSort = $state('canonical');
+
+  $effect(() => {
+    // Triggers whenever data changes on navigation
+    const _dep1 = data.bookName;
+    const _dep2 = data.chapterNum;
+
+    if (!browser) return;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const paramCanon = urlParams.get('canon');
+    const paramSort = urlParams.get('sort');
+
+    if (paramCanon && collections[paramCanon]) {
+      localStorage.setItem('selectedCanon', paramCanon);
+    }
+    if (paramSort && ['canonical', 'alphabetical', 'chronological'].includes(paramSort)) {
+      localStorage.setItem('selectedSort', paramSort);
+    }
+
+    activeCanon = localStorage.getItem('selectedCanon') || 'protestant';
+    activeSort = localStorage.getItem('selectedSort') || 'canonical';
+  });
+
+  let resolvedUrls = $derived.by(() => {
+    const defaultResult = { prev: data.prevUrl, next: data.nextUrl };
+
+    if (!browser) return defaultResult;
+
+    const canonBooks = (collections[activeCanon] || collections['protestant']).books;
+
+    let targetCanon = activeCanon;
+    let targetBooks = canonBooks;
+    if (!canonBooks.includes(data.bookName)) {
+      targetCanon = 'all';
+      targetBooks = collections['all'].books;
+    }
+
+    const availableBooks = targetBooks
+      .map(name => booksWithMetadata.find(b => b.name === name))
+      .filter(Boolean);
+
+    availableBooks.sort((a, b) => {
+      if (activeSort === 'alphabetical') {
+        return a.displayName.localeCompare(b.displayName);
+      }
+      if (activeSort === 'chronological') {
+        const diff = a.chronologicalOrder - b.chronologicalOrder;
+        return diff !== 0 ? diff : a.canonicalOrder - b.canonicalOrder;
+      }
+      return a.canonicalOrder - b.canonicalOrder;
+    });
+
+    const currentIndex = availableBooks.findIndex(b => b.name === data.bookName);
+    if (currentIndex === -1) return defaultResult;
+
+    let prev = null;
+    let next = null;
+
+    if (data.chapterNum > 1) {
+      prev = `/book/${data.bookName}/${data.chapterNum - 1}`;
+    } else if (currentIndex > 0) {
+      const prevBook = availableBooks[currentIndex - 1];
+      prev = `/book/${prevBook.name}/${prevBook.chapterCount}`;
+    }
+
+    if (data.chapterNum < data.totalChapters) {
+      next = `/book/${data.bookName}/${data.chapterNum + 1}`;
+    } else if (currentIndex < availableBooks.length - 1) {
+      const nextBook = availableBooks[currentIndex + 1];
+      next = `/book/${nextBook.name}/1`;
+    }
+
+    const suffix = `?canon=${targetCanon}&sort=${activeSort}`;
+    return {
+      prev: prev ? `${prev}${suffix}` : null,
+      next: next ? `${next}${suffix}` : null
+    };
+  });
 
   // Selected verses state
   let highlightedVerses = $state(new Set());
@@ -20,6 +105,38 @@
     toastTimeout = setTimeout(() => {
       showToast = false;
     }, 3000);
+  }
+
+  function fallbackCopy(text) {
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'absolute';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      const copied = document.execCommand('copy');
+      document.body.removeChild(textarea);
+      return copied;
+    } catch {
+      return false;
+    }
+  }
+
+  async function copyToClipboard(text, successMessage) {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+      } else if (!fallbackCopy(text)) {
+        throw new Error('Clipboard API unavailable');
+      }
+      showToastMessage(successMessage);
+      return true;
+    } catch {
+      showToastMessage('Could not copy automatically. Please copy manually.');
+      return false;
+    }
   }
 
   // Toggle verse selection
@@ -46,14 +163,13 @@
   }
 
   // Standard chapter citation
-  function cite() {
+  async function cite() {
     const citation = `${data.displayName} ${data.chapterNum}, King James Version.`;
-    navigator.clipboard.writeText(citation);
-    showToastMessage('Chapter citation copied to clipboard!');
+    await copyToClipboard(citation, 'Chapter citation copied to clipboard!');
   }
 
   // Copy selected verses formatted
-  function copySelectedVerses() {
+  async function copySelectedVerses() {
     if (highlightedVerses.size === 0) return;
     const sortedSelected = Array.from(highlightedVerses).sort((a, b) => a - b);
     
@@ -84,31 +200,50 @@
     }).join('\n');
     
     const fullText = `"${selectedTexts}"\n\n— ${citationRef}`;
-    navigator.clipboard.writeText(fullText);
-    showToastMessage('Selected verses copied to clipboard!');
+    await copyToClipboard(fullText, 'Selected verses copied to clipboard!');
   }
 
   // Generate share link with hash fragment
-  function shareSelectedVerses() {
+  async function shareSelectedVerses() {
     if (highlightedVerses.size === 0) return;
     const sortedSelected = Array.from(highlightedVerses).sort((a, b) => a - b);
     const hash = `v${sortedSelected.join(',')}`;
-    const shareUrl = `${window.location.origin}${window.location.pathname}#${hash}`;
-    navigator.clipboard.writeText(shareUrl);
-    showToastMessage('Shareable link copied to clipboard!');
+    const shareUrl = `${SITE_URL}/book/${data.bookName}/${data.chapterNum}#${hash}`;
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `${data.displayName} ${data.chapterNum} (KJV)`,
+          text: `Read selected verses in ${data.displayName} ${data.chapterNum}.`,
+          url: shareUrl
+        });
+        showToastMessage('Share dialog opened.');
+        return;
+      } catch (err) {
+        if (err?.name === 'AbortError') return;
+      }
+    }
+
+    await copyToClipboard(shareUrl, 'Shareable link copied to clipboard!');
   }
 
   // Download chapter JSON
   function download() {
-    const json = JSON.stringify(data.verses, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${data.bookName}-${data.chapterNum}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
-    showToastMessage('Chapter downloaded successfully.');
+    try {
+      const json = JSON.stringify(data.verses, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${data.bookName}-${data.chapterNum}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToastMessage('Chapter downloaded successfully.');
+    } catch {
+      showToastMessage('Could not download chapter JSON.');
+    }
   }
 
   // Scroll progress listener and initial hash parsing
@@ -160,6 +295,13 @@
 <svelte:head>
   <title>{data.displayName} {data.chapterNum} | KJV Bible</title>
   <meta name="description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={`${data.displayName} ${data.chapterNum} | KJV Bible`} />
+  <meta property="og:description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
+  <meta property="og:url" content={`${SITE_URL}/book/${data.bookName}/${data.chapterNum}`} />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={`${data.displayName} ${data.chapterNum} | KJV Bible`} />
+  <meta name="twitter:description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
   <script type="application/ld+json">
     {JSON.stringify(structuredData)}
   </script>
@@ -174,8 +316,8 @@
   </div>
 
   <div class="chapter-nav">
-    {#if data.prevUrl}
-      <a href={data.prevUrl} class="nav-link" data-sveltekit-preload-data="hover">
+    {#if resolvedUrls.prev}
+      <a href={resolvedUrls.prev} class="nav-link" data-sveltekit-preload-data="hover">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
         <span class="nav-text">Prev</span>
       </a>
@@ -190,8 +332,8 @@
       <a href="/book/{data.bookName}" class="title-link">{data.displayName} {data.chapterNum}</a>
     </h1>
 
-    {#if data.nextUrl}
-      <a href={data.nextUrl} class="nav-link" data-sveltekit-preload-data="hover">
+    {#if resolvedUrls.next}
+      <a href={resolvedUrls.next} class="nav-link" data-sveltekit-preload-data="hover">
         <span class="nav-text">Next</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </a>

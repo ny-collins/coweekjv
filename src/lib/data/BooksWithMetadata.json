@@ -509,7 +509,7 @@
   {
     "name": "Matthew",
     "displayName": "Matthew",
-    "chronologicalOrder": 39,
+    "chronologicalOrder": 53,
     "canonicalOrder": 40,
     "testament": "New",
     "canons": [
@@ -522,7 +522,7 @@
   {
     "name": "Mark",
     "displayName": "Mark",
-    "chronologicalOrder": 40,
+    "chronologicalOrder": 54,
     "canonicalOrder": 41,
     "testament": "New",
     "canons": [
@@ -535,7 +535,7 @@
   {
     "name": "Luke",
     "displayName": "Luke",
-    "chronologicalOrder": 41,
+    "chronologicalOrder": 55,
     "canonicalOrder": 42,
     "testament": "New",
     "canons": [
@@ -548,7 +548,7 @@
   {
     "name": "John",
     "displayName": "John",
-    "chronologicalOrder": 42,
+    "chronologicalOrder": 56,
     "canonicalOrder": 43,
     "testament": "New",
     "canons": [
@@ -561,7 +561,7 @@
   {
     "name": "Acts",
     "displayName": "Acts",
-    "chronologicalOrder": 43,
+    "chronologicalOrder": 57,
     "canonicalOrder": 44,
     "testament": "New",
     "canons": [
@@ -574,7 +574,7 @@
   {
     "name": "Romans",
     "displayName": "Romans",
-    "chronologicalOrder": 50,
+    "chronologicalOrder": 64,
     "canonicalOrder": 45,
     "testament": "New",
     "canons": [
@@ -587,7 +587,7 @@
   {
     "name": "1Corinthians",
     "displayName": "1 Corinthians",
-    "chronologicalOrder": 48,
+    "chronologicalOrder": 62,
     "canonicalOrder": 46,
     "testament": "New",
     "canons": [
@@ -600,7 +600,7 @@
   {
     "name": "2Corinthians",
     "displayName": "2 Corinthians",
-    "chronologicalOrder": 49,
+    "chronologicalOrder": 63,
     "canonicalOrder": 47,
     "testament": "New",
     "canons": [
@@ -613,7 +613,7 @@
   {
     "name": "Galatians",
     "displayName": "Galatians",
-    "chronologicalOrder": 45,
+    "chronologicalOrder": 59,
     "canonicalOrder": 48,
     "testament": "New",
     "canons": [
@@ -626,7 +626,7 @@
   {
     "name": "Ephesians",
     "displayName": "Ephesians",
-    "chronologicalOrder": 51,
+    "chronologicalOrder": 65,
     "canonicalOrder": 49,
     "testament": "New",
     "canons": [
@@ -639,7 +639,7 @@
   {
     "name": "Philippians",
     "displayName": "Philippians",
-    "chronologicalOrder": 52,
+    "chronologicalOrder": 66,
     "canonicalOrder": 50,
     "testament": "New",
     "canons": [
@@ -652,7 +652,7 @@
   {
     "name": "Colossians",
     "displayName": "Colossians",
-    "chronologicalOrder": 53,
+    "chronologicalOrder": 67,
     "canonicalOrder": 51,
     "testament": "New",
     "canons": [
@@ -665,7 +665,7 @@
   {
     "name": "1Thessalonians",
     "displayName": "1 Thessalonians",
-    "chronologicalOrder": 46,
+    "chronologicalOrder": 60,
     "canonicalOrder": 52,
     "testament": "New",
     "canons": [
@@ -678,7 +678,7 @@
   {
     "name": "2Thessalonians",
     "displayName": "2 Thessalonians",
-    "chronologicalOrder": 47,
+    "chronologicalOrder": 61,
     "canonicalOrder": 53,
     "testament": "New",
     "canons": [
@@ -691,7 +691,7 @@
   {
     "name": "1Timothy",
     "displayName": "1 Timothy",
-    "chronologicalOrder": 56,
+    "chronologicalOrder": 70,
     "canonicalOrder": 54,
     "testament": "New",
     "canons": [
@@ -704,7 +704,7 @@
   {
     "name": "2Timothy",
     "displayName": "2 Timothy",
-    "chronologicalOrder": 59,
+    "chronologicalOrder": 73,
     "canonicalOrder": 55,
     "testament": "New",
     "canons": [
@@ -717,7 +717,7 @@
   {
     "name": "Titus",
     "displayName": "Titus",
-    "chronologicalOrder": 57,
+    "chronologicalOrder": 71,
     "canonicalOrder": 56,
     "testament": "New",
     "canons": [
@@ -730,7 +730,7 @@
   {
     "name": "Philemon",
     "displayName": "Philemon",
-    "chronologicalOrder": 54,
+    "chronologicalOrder": 68,
     "canonicalOrder": 57,
     "testament": "New",
     "canons": [
@@ -743,7 +743,7 @@
   {
     "name": "Hebrews",
     "displayName": "Hebrews",
-    "chronologicalOrder": 55,
+    "chronologicalOrder": 69,
     "canonicalOrder": 58,
     "testament": "New",
     "canons": [
@@ -756,7 +756,7 @@
   {
     "name": "James",
     "displayName": "James",
-    "chronologicalOrder": 44,
+    "chronologicalOrder": 58,
     "canonicalOrder": 59,
     "testament": "New",
     "canons": [
@@ -769,7 +769,7 @@
   {
     "name": "1Peter",
     "displayName": "1 Peter",
-    "chronologicalOrder": 58,
+    "chronologicalOrder": 72,
     "canonicalOrder": 60,
     "testament": "New",
     "canons": [
@@ -782,7 +782,7 @@
   {
     "name": "2Peter",
     "displayName": "2 Peter",
-    "chronologicalOrder": 60,
+    "chronologicalOrder": 74,
     "canonicalOrder": 61,
     "testament": "New",
     "canons": [
@@ -795,7 +795,7 @@
   {
     "name": "1John",
     "displayName": "1 John",
-    "chronologicalOrder": 62,
+    "chronologicalOrder": 76,
     "canonicalOrder": 62,
     "testament": "New",
     "canons": [
@@ -808,7 +808,7 @@
   {
     "name": "2John",
     "displayName": "2 John",
-    "chronologicalOrder": 63,
+    "chronologicalOrder": 77,
     "canonicalOrder": 63,
     "testament": "New",
     "canons": [
@@ -821,7 +821,7 @@
   {
     "name": "3John",
     "displayName": "3 John",
-    "chronologicalOrder": 64,
+    "chronologicalOrder": 78,
     "canonicalOrder": 64,
     "testament": "New",
     "canons": [
@@ -834,7 +834,7 @@
   {
     "name": "Jude",
     "displayName": "Jude",
-    "chronologicalOrder": 61,
+    "chronologicalOrder": 75,
     "canonicalOrder": 65,
     "testament": "New",
     "canons": [
@@ -847,7 +847,7 @@
   {
     "name": "Revelation",
     "displayName": "Revelation",
-    "chronologicalOrder": 65,
+    "chronologicalOrder": 79,
     "canonicalOrder": 66,
     "testament": "New",
     "canons": [
@@ -866,7 +866,7 @@
     "canons": [
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 9
   },
   {
     "name": "2Esdras",
@@ -877,7 +877,7 @@
     "canons": [
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 16
   },
   {
     "name": "Tobit",
@@ -889,7 +889,7 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 14
   },
   {
     "name": "Judith",
@@ -901,7 +901,7 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 16
   },
   {
     "name": "WisdomofSolomon",
@@ -913,7 +913,7 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 19
   },
   {
     "name": "Ecclesiasticus",
@@ -925,7 +925,7 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 51
   },
   {
     "name": "Baruch",
@@ -937,7 +937,7 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 5
   },
   {
     "name": "LetterofJeremiah",
@@ -1004,7 +1004,7 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
+    "chapterCount": 16
   },
   {
     "name": "2Maccabees",
@@ -1016,18 +1016,6 @@
       "catholic",
       "orthodox"
     ],
-    "chapterCount": 1
-  },
-  {
-    "name": "3Maccabees",
-    "displayName": "3 Maccabees",
-    "chronologicalOrder": 53,
-    "canonicalOrder": 81,
-    "testament": "Apocrypha",
-    "canons": [
-      "orthodox"
-    ],
-    "missing": true,
-    "chapterCount": 0
+    "chapterCount": 15
   }
 ]

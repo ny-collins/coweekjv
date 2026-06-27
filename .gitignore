@@ -1,4 +1,3 @@
-node_modules
-.wrangler
-/.svelte-kit
-/build
+node_modules/
+.svelte-kit/
+build/

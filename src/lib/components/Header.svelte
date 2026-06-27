@@ -33,6 +33,10 @@
     darkMode = !darkMode;
     localStorage.setItem('darkMode', darkMode);
     document.documentElement.classList.toggle('dark-mode');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', darkMode ? '#0c0e14' : '#fcfaf6');
+    }
   }
 
   function increaseFontSize() {
