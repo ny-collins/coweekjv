@@ -121,6 +121,7 @@
   // Selected verses state
   let highlightedVerses = $state(new Set());
   let scrollPercent = $state(0);
+  let drawnPart = $derived(848 + (283 * (scrollPercent / 100)));
 
   // Toast notification state
   let toastMessage = $state('');
@@ -396,6 +397,35 @@
     {/if}
 
     <h1 class="title-heading">
+      <svg class="sub-header-logo" viewBox="0 0 512 512" aria-hidden="true">
+        <defs>
+          <linearGradient id="subheader-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#fbbf24" />
+            <stop offset="50%" stop-color="#f59e0b" />
+            <stop offset="100%" stop-color="#b45309" />
+          </linearGradient>
+        </defs>
+        
+        <!-- Dynamic Progress Monogram Circle (starts at 75% for "C", grows to 100%) -->
+        <circle cx="256" cy="256" r="180" fill="none" stroke="url(#subheader-gold-grad)" stroke-width="32" stroke-linecap="round" transform="rotate(-225 256 256)" stroke-dasharray="{drawnPart} 1131" />
+        
+        <!-- Open Book Pages (Translucent background) -->
+        <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325 Z" fill="url(#subheader-gold-grad)" opacity="0.15" />
+        <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325" stroke="url(#subheader-gold-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325 Z" fill="url(#subheader-gold-grad)" opacity="0.15" />
+        <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325" stroke="url(#subheader-gold-grad)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+        
+        <!-- Spine -->
+        <line x1="256" y1="190" x2="256" y2="325" stroke="url(#subheader-gold-grad)" stroke-width="14" stroke-linecap="round" />
+        
+        <!-- Page details -->
+        <path d="M 256 220 Q 220 195 180 210" stroke="url(#subheader-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 220 Q 292 195 332 210" stroke="url(#subheader-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 250 Q 220 225 180 240" stroke="url(#subheader-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 250 Q 292 225 332 240" stroke="url(#subheader-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 280 Q 220 255 180 270" stroke="url(#subheader-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+        <path d="M 256 280 Q 292 255 332 270" stroke="url(#subheader-gold-grad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.75" />
+      </svg>
       <a href="/book/{data.bookName}" class="title-link">{data.displayName} {data.chapterNum}</a>
     </h1>
 
@@ -521,7 +551,7 @@
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     position: sticky;
-    top: calc(0.5rem + env(safe-area-inset-top));
+    top: calc(5rem + env(safe-area-inset-top));
     z-index: 100;
     margin-bottom: 2rem;
     gap: 1rem;
@@ -560,7 +590,17 @@
     margin: 0;
     padding: 0;
     font-weight: inherit;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .sub-header-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
     display: inline-block;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   }
 
   .title-link {
@@ -873,7 +913,7 @@
   @media (max-width: 768px) {
     .chapter-sticky-header {
       padding: 0.6rem 1rem;
-      top: calc(0.25rem + env(safe-area-inset-top));
+      top: calc(4.25rem + env(safe-area-inset-top));
       border-radius: 10px;
       margin-bottom: 1.5rem;
     }

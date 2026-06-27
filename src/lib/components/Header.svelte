@@ -76,11 +76,8 @@
         showSettings = false;
       }
 
-      if (scrollY > lastScrollY && scrollY > 80) {
-        isHeaderHidden = true;
-      } else {
-        isHeaderHidden = false;
-      }
+      // Keep header visible always because it hosts the progress monogram logo
+      isHeaderHidden = false;
       lastScrollY = scrollY;
     };
 
@@ -326,11 +323,11 @@
   }
 
   .header-logo {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
     display: inline-block;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   }
 
   .controls {
