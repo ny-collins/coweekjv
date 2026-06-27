@@ -16,11 +16,17 @@
     // 0. Fade out and remove the instant PWA splash screen
     const splash = document.getElementById('app-splash-screen');
     if (splash) {
-      splash.style.opacity = '0';
+      const minDuration = 1200; // Enforce a 1.2s minimum display time for visual branding presence
+      const elapsedTime = Date.now() - (window.appStartTime || Date.now());
+      const delay = Math.max(0, minDuration - elapsedTime);
+
       setTimeout(() => {
-        splash.style.visibility = 'hidden';
-        splash.remove();
-      }, 300);
+        splash.style.opacity = '0';
+        setTimeout(() => {
+          splash.style.visibility = 'hidden';
+          splash.remove();
+        }, 300); // Wait for transition fade-out to finish
+      }, delay);
     }
 
     // 1. Recover gracefully if a dynamic chunk preloading fails (common during deployments)
