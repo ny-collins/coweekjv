@@ -182,10 +182,10 @@
 
 <header class:header-hidden={isHeaderHidden}>
   <nav>
-    <a href="/" class="logo" onclick={() => showSettings = false}>KJV Bible</a>
+    <a href="/" class="logo" onclick={() => showSettings = false}>Cowee KJV</a>
     <div class="controls">
       {#if showInstallButton}
-        <button onclick={installApp} class="install-btn" aria-label="Install KJV Reader App">
+        <button onclick={installApp} class="install-btn" aria-label="Install Cowee KJV App">
           <span class="install-text-long">Install App</span>
           <span class="install-text-short">Install</span>
         </button>

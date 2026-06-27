@@ -1,6 +1,6 @@
 {
-  "name": "King James Version Reader",
-  "short_name": "KJV Reader",
+  "name": "Cowee KJV Bible",
+  "short_name": "Cowee KJV",
   "description": "A direct-forward, minimalist King James Version Bible.",
   "start_url": "/",
   "icons": [
@@ -17,7 +17,7 @@
       "purpose": "maskable any"
     }
   ],
-  "theme_color": "#ffffff",
-  "background_color": "#ffffff",
+  "theme_color": "#fcfaf6",
+  "background_color": "#fcfaf6",
   "display": "standalone"
 }

@@ -1,3 +1,43 @@
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 200 200"><rect width="200" height="200" fill="url('#gradient')"></rect><defs><linearGradient id="SvgjsLinearGradient1001" gradientTransform="rotate(45 0.5 0.5)"><stop offset="0%" stop-color="#be0bf4"></stop><stop offset="100%" stop-color="#c50ed5"></stop></linearGradient></defs><g><g fill="#0df108" transform="matrix(4.970873786407767,0,0,4.970873786407767,4.6589506447894,134.84754490157934)" stroke="#fbc952" stroke-width="0.45"><path d="M8.94 0L5.91-5.29L4.50-3.75L4.50 0L1.07 0L1.07-14.22L4.50-14.22L4.50-7.95L5.69-9.76L8.76-14.22L13.00-14.22L8.19-7.93L13.00 0L8.94 0ZM19.53-4.46L19.53-14.22L22.95-14.22L22.95-4.46Q22.95-3.11 22.32-2.04Q21.69-0.98 20.56-0.39Q19.43 0.20 18.05 0.20L18.05 0.20Q15.72 0.20 14.43-0.98Q13.14-2.15 13.14-4.30L13.14-4.30L16.58-4.30Q16.58-3.32 16.92-2.88Q17.26-2.44 18.05-2.44L18.05-2.44Q18.76-2.44 19.15-2.97Q19.53-3.51 19.53-4.46L19.53-4.46ZM27.80-14.22L30.63-3.87L33.46-14.22L37.29-14.22L32.50 0L28.75 0L24.00-14.22L27.80-14.22Z"></path></g></g></svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
-@media (prefers-color-scheme: dark) { :root { filter: none; } }
-</style></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <!-- Gold Gradient for Monogram and Pages -->
+    <linearGradient id="gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#b45309" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded rectangle (for app icons) -->
+  <rect width="512" height="512" rx="112" fill="url(#bg-grad)" />
+
+  <!-- Outer crescent forming the letter 'C' -->
+  <path d="M 380 132 A 180 180 0 1 0 380 380" stroke="url(#gold-grad)" stroke-width="24" stroke-linecap="round" fill="none" />
+
+  <!-- Inner Open Book -->
+  <!-- Left Page -->
+  <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325 Z" fill="url(#gold-grad)" opacity="0.15" />
+  <path d="M 256 190 Q 210 160 160 180 L 160 315 Q 210 295 256 325" stroke="url(#gold-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  
+  <!-- Right Page -->
+  <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325 Z" fill="url(#gold-grad)" opacity="0.15" />
+  <path d="M 256 190 Q 302 160 352 180 L 352 315 Q 302 295 256 325" stroke="url(#gold-grad)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+  <!-- Book Spine -->
+  <line x1="256" y1="190" x2="256" y2="325" stroke="url(#gold-grad)" stroke-width="12" stroke-linecap="round" />
+
+  <!-- Page lines details -->
+  <path d="M 256 220 Q 220 195 180 210" stroke="url(#gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+  <path d="M 256 220 Q 292 195 332 210" stroke="url(#gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+  
+  <path d="M 256 250 Q 220 225 180 240" stroke="url(#gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+  <path d="M 256 250 Q 292 225 332 240" stroke="url(#gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+
+  <path d="M 256 280 Q 220 255 180 270" stroke="url(#gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+  <path d="M 256 280 Q 292 255 332 270" stroke="url(#gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
+</svg>

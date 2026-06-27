@@ -142,7 +142,7 @@
   let structuredData = $derived({
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "KJV Bible",
+    "name": "Cowee KJV Bible",
     "url": `${SITE_URL}/`
   });
 </script>
@@ -150,14 +150,14 @@
 <svelte:window onkeydown={handleGlobalKeyDown} />
 
 <svelte:head>
-  <title>KJV Bible</title>
+  <title>Cowee KJV Bible</title>
   <meta name="description" content="Read the King James Version of the Bible online." />
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="KJV Bible" />
+  <meta property="og:title" content="Cowee KJV Bible" />
   <meta property="og:description" content="Read the King James Version of the Bible online." />
   <meta property="og:url" content={`${SITE_URL}/`} />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="KJV Bible" />
+  <meta name="twitter:title" content="Cowee KJV Bible" />
   <meta name="twitter:description" content="Read the King James Version of the Bible online." />
   <script type="application/ld+json">
     {JSON.stringify(structuredData)}

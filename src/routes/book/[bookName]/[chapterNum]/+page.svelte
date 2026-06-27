@@ -360,14 +360,14 @@
 </script>
 
 <svelte:head>
-  <title>{data.displayName} {data.chapterNum} | KJV Bible</title>
+  <title>{data.displayName} {data.chapterNum} | Cowee KJV</title>
   <meta name="description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
   <meta property="og:type" content="article" />
-  <meta property="og:title" content={`${data.displayName} ${data.chapterNum} | KJV Bible`} />
+  <meta property="og:title" content={`${data.displayName} ${data.chapterNum} | Cowee KJV`} />
   <meta property="og:description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
   <meta property="og:url" content={`${SITE_URL}/book/${data.bookName}/${data.chapterNum}`} />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content={`${data.displayName} ${data.chapterNum} | KJV Bible`} />
+  <meta name="twitter:title" content={`${data.displayName} ${data.chapterNum} | Cowee KJV`} />
   <meta name="twitter:description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
   <script type="application/ld+json">
     {JSON.stringify(structuredData)}
