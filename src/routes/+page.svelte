@@ -9,6 +9,9 @@
   let sortOrder = $state('canonical');
   let selectedCanon = $state(defaultCanon);
 
+  let recentlyRead = $state([]);
+  let bookmarks = $state([]);
+
   onMount(() => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlCanon = urlParams.get('canon');
@@ -26,6 +29,42 @@
     if (savedSort && ['canonical', 'alphabetical', 'chronological'].includes(savedSort)) {
       sortOrder = savedSort;
     }
+
+    // Load reading history
+    try {
+      const historyStr = localStorage.getItem('recentlyRead') || '[]';
+      recentlyRead = JSON.parse(historyStr);
+    } catch (e) {}
+
+    // Load bookmarks
+    try {
+      const highlightsStr = localStorage.getItem('bible-highlights') || '{}';
+      const highlights = JSON.parse(highlightsStr);
+      const tempBookmarks = [];
+      
+      for (const [bookChapterKey, versesObj] of Object.entries(highlights)) {
+        const dashIndex = bookChapterKey.lastIndexOf('-');
+        if (dashIndex === -1) continue;
+        const bookName = bookChapterKey.slice(0, dashIndex);
+        const chapterNum = bookChapterKey.slice(dashIndex + 1);
+        
+        const book = data.books.find(b => b.name === bookName);
+        const displayName = book ? book.displayName : bookName;
+        
+        for (const [verseNum, color] of Object.entries(versesObj)) {
+          if (color) {
+            tempBookmarks.push({
+              bookName,
+              displayName,
+              chapterNum,
+              verseNum,
+              color
+            });
+          }
+        }
+      }
+      bookmarks = tempBookmarks.slice(-5).reverse();
+    } catch (e) {}
   });
 
   $effect(() => {
@@ -77,6 +116,29 @@
     return a.canonicalOrder - b.canonicalOrder;
   }));
 
+  let searchInput = $state();
+
+  function highlightMatch(displayName, search) {
+    if (!search) return displayName;
+    const index = displayName.toLowerCase().indexOf(search.toLowerCase());
+    if (index === -1) return displayName;
+    const start = displayName.slice(0, index);
+    const match = displayName.slice(index, index + search.length);
+    const end = displayName.slice(index + search.length);
+    return `${start}<mark class="search-highlight">${match}</mark>${end}`;
+  }
+
+  function handleGlobalKeyDown(e) {
+    if (e.key === '/' && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+      e.preventDefault();
+      if (searchInput) searchInput.focus();
+    }
+    if (e.key === 'Escape' && document.activeElement === searchInput) {
+      searchTerm = '';
+      searchInput.blur();
+    }
+  }
+
   let structuredData = $derived({
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -84,6 +146,8 @@
     "url": `${SITE_URL}/`
   });
 </script>
+
+<svelte:window onkeydown={handleGlobalKeyDown} />
 
 <svelte:head>
   <title>KJV Bible</title>
@@ -105,6 +169,38 @@
   <p class="subtitle">King James Version</p>
 </div>
 
+{#if recentlyRead.length > 0 || bookmarks.length > 0}
+  <div class="dashboard-container">
+    {#if recentlyRead.length > 0}
+      <div class="dashboard-section">
+        <h3>Recently Read</h3>
+        <div class="history-pills">
+          {#each recentlyRead as item}
+            <a href="/book/{item.bookName}/{item.chapterNum}" class="history-pill" data-sveltekit-preload-data="hover">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              {item.displayName} {item.chapterNum}
+            </a>
+          {/each}
+        </div>
+      </div>
+    {/if}
+
+    {#if bookmarks.length > 0}
+      <div class="dashboard-section">
+        <h3>My Bookmarks</h3>
+        <div class="bookmark-links">
+          {#each bookmarks as bm}
+            <a href="/book/{bm.bookName}/{bm.chapterNum}#v{bm.verseNum}" class="bookmark-link-pill highlight-{bm.color}" data-sveltekit-preload-data="hover">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              {bm.displayName} {bm.chapterNum}:{bm.verseNum}
+            </a>
+          {/each}
+        </div>
+      </div>
+    {/if}
+  </div>
+{/if}
+
 <div class="controls-container">
   <div class="canon-container">
     <label for="canon-select">Canon:</label>
@@ -116,7 +212,7 @@
   </div>
 
   <div class="search-container">
-    <input type="text" id="book-search" placeholder="Search for a book..." aria-label="Search for a book" bind:value={searchTerm} />
+    <input type="text" id="book-search" placeholder="Search for a book... (Press '/' to focus)" aria-label="Search for a book" bind:value={searchTerm} bind:this={searchInput} />
   </div>
 
   <div class="sort-container">
@@ -139,7 +235,7 @@
             {#if book.missing}
               <span class="book-link disabled" title="Text currently unavailable">{book.displayName}</span>
             {:else}
-              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{book.displayName}</a>
+              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{@html highlightMatch(book.displayName, searchTerm)}</a>
             {/if}
           {/each}
         </div>
@@ -154,7 +250,7 @@
             {#if book.missing}
               <span class="book-link disabled" title="Text currently unavailable">{book.displayName}</span>
             {:else}
-              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{book.displayName}</a>
+              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{@html highlightMatch(book.displayName, searchTerm)}</a>
             {/if}
           {/each}
         </div>
@@ -169,7 +265,7 @@
             {#if book.missing}
               <span class="book-link disabled" title="Text currently unavailable">{book.displayName}</span>
             {:else}
-              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{book.displayName}</a>
+              <a href="/book/{book.name}" class="book-link" data-sveltekit-preload-data="hover">{@html highlightMatch(book.displayName, searchTerm)}</a>
             {/if}
           {/each}
         </div>
@@ -445,4 +541,71 @@
       border-radius: 8px;
     }
   }
+
+  .dashboard-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--card-shadow);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .dashboard-container {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+  }
+
+  .dashboard-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dashboard-section h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    margin: 0 0 0.75rem 0;
+    color: var(--text-color);
+    opacity: 0.65;
+  }
+
+  .history-pills, .bookmark-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .history-pill, .bookmark-link-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.45rem 0.85rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 20px;
+    background-color: var(--background-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .history-pill:hover, .bookmark-link-pill:hover {
+    border-color: var(--link-color);
+    color: var(--link-color);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--glow-color);
+  }
+
+  .bookmark-link-pill.highlight-yellow { border-left: 3px solid #eab308; }
+  .bookmark-link-pill.highlight-green { border-left: 3px solid #22c55e; }
+  .bookmark-link-pill.highlight-blue { border-left: 3px solid #3b82f6; }
+  .bookmark-link-pill.highlight-pink { border-left: 3px solid #ec4899; }
 </style>

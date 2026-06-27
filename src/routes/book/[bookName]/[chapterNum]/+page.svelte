@@ -10,11 +10,13 @@
 
   let activeCanon = $state('protestant');
   let activeSort = $state('canonical');
+  let chapterHighlights = $state({});
 
   $effect(() => {
     // Triggers whenever data changes on navigation
-    const _dep1 = data.bookName;
-    const _dep2 = data.chapterNum;
+    const bookName = data.bookName;
+    const chapterNum = data.chapterNum;
+    const displayName = data.displayName;
 
     if (!browser) return;
 
@@ -31,6 +33,33 @@
 
     activeCanon = localStorage.getItem('selectedCanon') || 'protestant';
     activeSort = localStorage.getItem('selectedSort') || 'canonical';
+
+    // Add to Recently Read list
+    try {
+      const historyStr = localStorage.getItem('recentlyRead') || '[]';
+      let history = JSON.parse(historyStr);
+      history = history.filter(item => !(item.bookName === bookName && item.chapterNum === chapterNum));
+      history.unshift({
+        bookName,
+        displayName,
+        chapterNum,
+        timestamp: Date.now()
+      });
+      history = history.slice(0, 5);
+      localStorage.setItem('recentlyRead', JSON.stringify(history));
+    } catch (e) {
+      console.warn('Could not update history:', e);
+    }
+
+    // Load active chapter highlights
+    try {
+      const highlightsStr = localStorage.getItem('bible-highlights') || '{}';
+      const highlights = JSON.parse(highlightsStr);
+      const chapterKey = `${bookName}-${chapterNum}`;
+      chapterHighlights = highlights[chapterKey] || {};
+    } catch (e) {
+      chapterHighlights = {};
+    }
   });
 
   let resolvedUrls = $derived.by(() => {
@@ -280,6 +309,44 @@
     }
   });
 
+  function highlightSelected(color) {
+    if (highlightedVerses.size === 0) return;
+    const bookName = data.bookName;
+    const chapterNum = data.chapterNum;
+    const chapterKey = `${bookName}-${chapterNum}`;
+
+    try {
+      const highlightsStr = localStorage.getItem('bible-highlights') || '{}';
+      const highlights = JSON.parse(highlightsStr);
+      
+      if (!highlights[chapterKey]) {
+        highlights[chapterKey] = {};
+      }
+      
+      highlightedVerses.forEach(verseNum => {
+        if (color) {
+          highlights[chapterKey][verseNum] = color;
+          chapterHighlights[verseNum] = color;
+        } else {
+          delete highlights[chapterKey][verseNum];
+          delete chapterHighlights[verseNum];
+        }
+      });
+
+      if (Object.keys(highlights[chapterKey]).length === 0) {
+        delete highlights[chapterKey];
+      }
+
+      localStorage.setItem('bible-highlights', JSON.stringify(highlights));
+      chapterHighlights = { ...chapterHighlights }; // trigger reactivity
+      
+      showToastMessage(color ? 'Selected verses highlighted!' : 'Selected highlights removed.');
+      clearSelection();
+    } catch (e) {
+      console.warn('Could not save highlights:', e);
+    }
+  }
+
   let structuredData = $derived({
     "@context": "https://schema.org",
     "@type": "CreativeWork",
@@ -368,6 +435,10 @@
         id="v-{verse.verse}" 
         class="verse"
         class:highlighted={highlightedVerses.has(verse.verse)}
+        class:highlight-yellow={chapterHighlights[verse.verse] === 'yellow'}
+        class:highlight-green={chapterHighlights[verse.verse] === 'green'}
+        class:highlight-blue={chapterHighlights[verse.verse] === 'blue'}
+        class:highlight-pink={chapterHighlights[verse.verse] === 'pink'}
         onclick={() => toggleVerseHighlight(verse.verse)}
         onkeydown={(e) => handleVerseKeyDown(e, verse.verse)}
         role="button"
@@ -402,7 +473,21 @@
     <span class="selection-count">
       {highlightedVerses.size} {highlightedVerses.size === 1 ? 'verse' : 'verses'} selected
     </span>
+    
     <div class="toolbar-divider"></div>
+
+    <div class="toolbar-highlight-colors">
+      <button onclick={() => highlightSelected('yellow')} class="color-dot yellow" aria-label="Highlight in yellow" title="Highlight Yellow"></button>
+      <button onclick={() => highlightSelected('green')} class="color-dot green" aria-label="Highlight in green" title="Highlight Green"></button>
+      <button onclick={() => highlightSelected('blue')} class="color-dot blue" aria-label="Highlight in blue" title="Highlight Blue"></button>
+      <button onclick={() => highlightSelected('pink')} class="color-dot pink" aria-label="Highlight in pink" title="Highlight Pink"></button>
+      <button onclick={() => highlightSelected(null)} class="color-dot clear" aria-label="Clear highlight" title="Clear Highlights">
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="toolbar-divider"></div>
+    
     <button onclick={copySelectedVerses} class="toolbar-btn" aria-label="Copy selected verses">
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
       <span class="btn-text">Copy Text</span>
@@ -874,5 +959,42 @@
       justify-content: center;
       padding: 0.6rem 1rem;
     }
+  }
+
+  .toolbar-highlight-colors {
+    display: flex;
+    gap: 0.45rem;
+    align-items: center;
+  }
+
+  .color-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    padding: 0;
+    border: 1.5px solid var(--border-color);
+    cursor: pointer;
+    transition: transform 0.15s ease, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+  }
+
+  .color-dot:hover {
+    transform: scale(1.2);
+    border-color: var(--text-color);
+  }
+
+  .color-dot.yellow { background-color: #fef08a; }
+  .color-dot.green { background-color: #bbf7d0; }
+  .color-dot.blue { background-color: #bfdbfe; }
+  .color-dot.pink { background-color: #fbcfe8; }
+  .color-dot.clear { 
+    background-color: var(--background-color); 
+    color: var(--text-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

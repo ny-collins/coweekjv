@@ -2,6 +2,8 @@
   import { dev } from '$app/environment';
   import { onMount } from 'svelte';
   import { SITE_URL } from '$lib/site';
+  import { page } from '$app/stores';
+  import { fade } from 'svelte/transition';
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
   import '../app.css';
@@ -35,7 +37,11 @@
 <Header />
 
 <main id="main-content">
-  {@render children()}
+  {#key $page.url.pathname}
+    <div in:fade={{ duration: 150, delay: 150 }} out:fade={{ duration: 150 }}>
+      {@render children()}
+    </div>
+  {/key}
 </main>
 
 <Footer />
