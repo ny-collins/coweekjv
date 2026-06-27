@@ -6,22 +6,39 @@ const CACHE_NAME = `kjv-reader-cache-${version}`;
 const ASSETS_TO_CACHE = build.concat(files).concat(['/']);
 
 // Helper to clean cached response headers to prevent NS_ERROR_CORRUPTED_CONTENT in Firefox
-// when returning cached decompressed content that still has compression headers.
-function cleanResponse(response) {
+// by removing the content-encoding compression headers on cache writes.
+async function cleanResponse(response) {
   if (!response) return response;
   
   if (response.headers.has('content-encoding')) {
     const cleanHeaders = new Headers(response.headers);
     cleanHeaders.delete('content-encoding');
     
-    return new Response(response.body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers: cleanHeaders
-    });
+    try {
+      // Resolve body as blob to avoid stream locking exceptions
+      const blob = await response.blob();
+      return new Response(blob, {
+        status: response.status,
+        statusText: response.statusText,
+        headers: cleanHeaders
+      });
+    } catch (err) {
+      console.warn('Failed to decompress cached body stream, falling back to original:', err);
+      return response;
+    }
   }
   
   return response;
+}
+
+// Background clean and cache helper
+async function cleanAndCache(cache, request, response) {
+  try {
+    const cleaned = await cleanResponse(response);
+    await cache.put(request, cleaned);
+  } catch (err) {
+    console.warn('Failed to cache resource asynchronously:', request.url, err);
+  }
 }
 
 self.addEventListener('install', (event) => {
@@ -31,10 +48,16 @@ self.addEventListener('install', (event) => {
       .then(async (cache) => {
         // Safe pre-caching: cache assets individually to prevent the entire process 
         // from failing if a single resource fails to load (e.g. static server returning 404 for some files).
-        const promises = ASSETS_TO_CACHE.map((asset) => {
-          return cache.add(asset).catch((err) => {
+        const promises = ASSETS_TO_CACHE.map(async (asset) => {
+          try {
+            const response = await fetch(asset);
+            if (response.status === 200) {
+              const cleaned = await cleanResponse(response);
+              await cache.put(asset, cleaned);
+            }
+          } catch (err) {
             console.warn(`[ServiceWorker] Skipping pre-cache for asset: ${asset}`, err);
-          });
+          }
         });
         await Promise.all(promises);
       })
@@ -87,31 +110,30 @@ self.addEventListener('fetch', (event) => {
 
       if (isStaticAsset) {
         const cachedResponse = await cache.match(event.request);
-        if (cachedResponse) return cleanResponse(cachedResponse);
+        if (cachedResponse) return cachedResponse; // Returned directly, already cleaned!
       }
 
       // 2. For routing pages (navigation) and other assets, use Network-First falling back to Cache
       try {
         const response = await fetch(event.request);
         if (response.status === 200) {
-          // Perform caching in the background and catch errors to prevent network fetch from failing
-          cache.put(event.request, response.clone()).catch((cacheErr) => {
-            console.warn('Failed to cache resource asynchronously:', event.request.url, cacheErr);
-          });
+          // Perform clean caching in the background
+          cleanAndCache(cache, event.request, response.clone());
         }
         return response;
       } catch (err) {
         // Fallback to cache for offline navigation
         const cachedResponse = await cache.match(event.request);
-        if (cachedResponse) return cleanResponse(cachedResponse);
+        if (cachedResponse) return cachedResponse;
 
         // If offline and request is page navigation, return cached root (SPA fallback)
         if (event.request.mode === 'navigate') {
           const rootResponse = await cache.match('/');
-          if (rootResponse) return cleanResponse(rootResponse);
+          if (rootResponse) return rootResponse;
         }
 
-        throw err;
+        // Return standard browser network error response instead of throwing raw error, to avoid console crash logs
+        return Response.error();
       }
     })
   );
