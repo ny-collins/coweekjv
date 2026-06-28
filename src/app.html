@@ -4,6 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="theme-color" content="#ffffff" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="default" />
@@ -108,7 +110,8 @@
       visibility: visible;
       transition: opacity 0.3s ease, visibility 0.3s;
     ">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" style="width: 110px; height: 110px; animation: splashPulse 2s infinite ease-in-out;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="splash-logo-title" style="width: 110px; height: 110px; animation: splashPulse 2s infinite ease-in-out;">
+        <title id="splash-logo-title">Cowee KJV Monogram Logo</title>
         <defs>
           <linearGradient id="splash-gold-grad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#fbbf24" />
@@ -130,7 +133,7 @@
         <path d="M 256 280 Q 292 255 332 270" stroke="url(#splash-gold-grad)" stroke-width="6" stroke-linecap="round" fill="none" opacity="0.75" />
       </svg>
       <h2 style="
-        font-family: system-ui, -apple-system, sans-serif;
+        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
         color: #2c2a29;
         font-size: 1.35rem;
         font-weight: 700;
@@ -166,18 +169,19 @@
         position: absolute;
         bottom: 2rem;
         background: transparent;
-        border: 1px solid currentColor;
+        border: 1.5px solid currentColor;
         color: #2c2a29;
-        opacity: 0.35;
-        padding: 0.35rem 0.85rem;
-        font-family: system-ui, -apple-system, sans-serif;
+        opacity: 0.5;
+        padding: 0.4rem 1.1rem;
+        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
         font-size: 0.75rem;
-        font-weight: 600;
-        border-radius: 6px;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        border-radius: 8px;
         cursor: pointer;
-        transition: opacity 0.2s, background-color 0.2s, color 0.3s;
-        outline: none;
-      " onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='0.35'">
+        transition: opacity 0.2s, transform 0.2s, background-color 0.2s, color 0.3s, box-shadow 0.2s;
+      ">
         Skip
       </button>
 
@@ -189,6 +193,19 @@
         @keyframes splashProgress {
           0% { width: 0%; }
           100% { width: 100%; }
+        }
+        #splash-skip-btn:hover {
+          opacity: 0.85 !important;
+          transform: scale(1.04);
+          background-color: rgba(245, 158, 11, 0.08);
+        }
+        #splash-skip-btn:focus-visible {
+          opacity: 0.9 !important;
+          outline: 2px solid #f59e0b;
+          outline-offset: 3px;
+        }
+        #splash-skip-btn:active {
+          transform: scale(0.96);
         }
       </style>
     </div>
