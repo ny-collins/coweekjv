@@ -71,22 +71,14 @@
             }
           });
 
-          // Adapt splash screen style instantly to prevent bright flash
-          window.addEventListener('DOMContentLoaded', function() {
-            var splash = document.getElementById('app-splash-screen');
-            if (splash) {
-              var bg = '#fcfaf6';
-              var tc = '#2c2a29';
-              if (savedTheme === 'sepia') { bg = '#f4ecd8'; tc = '#5c4033'; }
-              else if (savedTheme === 'slate') { bg = '#0f172a'; tc = '#cbd5e1'; }
-              else if (savedTheme === 'dark' || isDark) { bg = '#0c0e14'; tc = '#e2e8f0'; }
-              splash.style.backgroundColor = bg;
-              var text = splash.querySelector('h2');
-              if (text) text.style.color = tc;
-              var skipBtn = splash.querySelector('#splash-skip-btn');
-              if (skipBtn) skipBtn.style.color = tc;
-            }
-          });
+          // Set CSS custom properties on document element instantly to prevent splash flashing
+          var bg = '#fcfaf6';
+          var tc = '#2c2a29';
+          if (savedTheme === 'sepia') { bg = '#f4ecd8'; tc = '#5c4033'; }
+          else if (savedTheme === 'slate') { bg = '#0f172a'; tc = '#cbd5e1'; }
+          else if (savedTheme === 'dark' || isDark) { bg = '#0c0e14'; tc = '#e2e8f0'; }
+          document.documentElement.style.setProperty('--splash-bg', bg);
+          document.documentElement.style.setProperty('--splash-tc', tc);
         } catch (e) {}
       })();
     </script>
@@ -100,7 +92,7 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #fcfaf6;
+      background-color: var(--splash-bg, #fcfaf6);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -134,7 +126,7 @@
       </svg>
       <h2 style="
         font-family: 'Outfit', system-ui, -apple-system, sans-serif;
-        color: #2c2a29;
+        color: var(--splash-tc, #2c2a29);
         font-size: 1.35rem;
         font-weight: 700;
         margin-top: 1.25rem;
@@ -170,7 +162,7 @@
         bottom: 2rem;
         background: transparent;
         border: 1.5px solid currentColor;
-        color: #2c2a29;
+        color: var(--splash-tc, #2c2a29);
         opacity: 0.5;
         padding: 0.4rem 1.1rem;
         font-family: 'Outfit', system-ui, -apple-system, sans-serif;
