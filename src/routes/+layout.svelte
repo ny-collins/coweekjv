@@ -70,31 +70,40 @@
     // 2. Service Worker Registration Lifecycle
     if (!('serviceWorker' in navigator) || dev) return;
 
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => {
-        registration = reg;
+    // Skip service worker registration for search crawlers/bots
+    const isBot = typeof navigator !== 'undefined' && 
+      /bot|google|baidu|bing|msn|duckduckgo|teoma|slurp|yandex/i.test(navigator.userAgent);
+    if (isBot) return;
 
-        // Check if there is already a service worker waiting in the background
-        if (registration.waiting) {
-          showUpdateToast = true;
-        }
+    try {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => {
+          registration = reg;
 
-        // Listen for new service workers installing
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing;
-          if (newWorker) {
-            newWorker.addEventListener('statechange', () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                // New worker is installed and waiting to take over
-                showUpdateToast = true;
-              }
-            });
+          // Check if there is already a service worker waiting in the background
+          if (registration.waiting) {
+            showUpdateToast = true;
           }
+
+          // Listen for new service workers installing
+          registration.addEventListener('updatefound', () => {
+            const newWorker = registration.installing;
+            if (newWorker) {
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New worker is installed and waiting to take over
+                  showUpdateToast = true;
+                }
+              });
+            }
+          });
+        })
+        .catch((err) => {
+          console.warn('[ServiceWorker] Registration failed:', err);
         });
-      })
-      .catch((err) => {
-        console.warn('[ServiceWorker] Registration failed:', err);
-      });
+    } catch (e) {
+      console.warn('[ServiceWorker] Registration failed synchronously:', e);
+    }
 
     // When the new worker takes control, trigger page reload to fetch latest assets
     navigator.serviceWorker.addEventListener('controllerchange', () => {
