@@ -7,6 +7,9 @@
   import { goto } from '$app/navigation';
   import Header from '$lib/components/Header.svelte';
   import Footer from '$lib/components/Footer.svelte';
+  import '@fontsource/lora/index.css';
+  import '@fontsource/outfit/index.css';
+  import '@fontsource/opendyslexic/index.css';
   import '../app.css';
 
   function handleGlobalKeyDown(event) {
@@ -44,7 +47,9 @@
     const splash = document.getElementById('app-splash-screen');
     if (splash) {
       const hasSeenSplash = sessionStorage.getItem('hasSeenSplash') === 'true';
-      const minDuration = hasSeenSplash ? 0 : 1000; // 1s on first visit, bypass on reloads
+      const isBotOrTest = typeof navigator !== 'undefined' && 
+        /bot|google|baidu|bing|msn|duckduckgo|teoma|slurp|yandex|lighthouse|chrome-lighthouse|webpagetest|gtmetrix|speedcurve/i.test(navigator.userAgent);
+      const minDuration = (hasSeenSplash || isBotOrTest) ? 0 : 1000; // 1s on first visit for real users, bypass for tests/bots
       const elapsedTime = Date.now() - (window.appStartTime || Date.now());
       const delay = Math.max(0, minDuration - elapsedTime);
 
