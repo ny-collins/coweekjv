@@ -409,10 +409,12 @@
   <meta property="og:title" content={`${data.displayName} ${data.chapterNum} | Cowee KJV`} />
   <meta property="og:description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
   <meta property="og:url" content={`${SITE_URL}/book/${data.bookName}/${data.chapterNum}`} />
+  <meta property="og:image" content={`${SITE_URL}/favicon/web-app-manifest-512x512.png`} />
   <link rel="canonical" href={`${SITE_URL}/book/${data.bookName}/${data.chapterNum}`} />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={`${data.displayName} ${data.chapterNum} | Cowee KJV`} />
   <meta name="twitter:description" content={`Read ${data.displayName} chapter ${data.chapterNum} from the King James Version of the Bible.`} />
+  <meta name="twitter:image" content={`${SITE_URL}/favicon/web-app-manifest-512x512.png`} />
   {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}<\/script>`}
   {@html `<script type="application/ld+json">${JSON.stringify(breadcrumbData)}<\/script>`}
 </svelte:head>

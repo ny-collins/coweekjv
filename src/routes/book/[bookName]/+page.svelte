@@ -40,10 +40,12 @@
   <meta property="og:title" content={`${data.displayName} | Cowee KJV`} />
   <meta property="og:description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
   <meta property="og:url" content={`${SITE_URL}/book/${data.bookName}`} />
+  <meta property="og:image" content={`${SITE_URL}/favicon/web-app-manifest-512x512.png`} />
   <link rel="canonical" href={`${SITE_URL}/book/${data.bookName}`} />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={`${data.displayName} | Cowee KJV`} />
   <meta name="twitter:description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
+  <meta name="twitter:image" content={`${SITE_URL}/favicon/web-app-manifest-512x512.png`} />
   {#if data.chapters}
     {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}<\/script>`}
     {@html `<script type="application/ld+json">${JSON.stringify(breadcrumbData)}<\/script>`}

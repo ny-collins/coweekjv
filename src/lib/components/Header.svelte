@@ -255,10 +255,10 @@
             <div class="settings-section">
               <span class="section-label">Theme</span>
               <div class="theme-options">
-                <button onclick={() => selectTheme('light')} class="theme-circle light" class:active={activeTheme === 'light'} title="Light Theme"></button>
-                <button onclick={() => selectTheme('sepia')} class="theme-circle sepia" class:active={activeTheme === 'sepia'} title="Sepia Theme"></button>
-                <button onclick={() => selectTheme('slate')} class="theme-circle slate" class:active={activeTheme === 'slate'} title="Slate Theme"></button>
-                <button onclick={() => selectTheme('dark')} class="theme-circle dark" class:active={activeTheme === 'dark'} title="Dark Theme"></button>
+                <button onclick={() => selectTheme('light')} class="theme-circle light" class:active={activeTheme === 'light'} aria-label="Light theme" title="Light Theme"></button>
+                <button onclick={() => selectTheme('sepia')} class="theme-circle sepia" class:active={activeTheme === 'sepia'} aria-label="Sepia theme" title="Sepia Theme"></button>
+                <button onclick={() => selectTheme('slate')} class="theme-circle slate" class:active={activeTheme === 'slate'} aria-label="Slate theme" title="Slate Theme"></button>
+                <button onclick={() => selectTheme('dark')} class="theme-circle dark" class:active={activeTheme === 'dark'} aria-label="Dark theme" title="Dark Theme"></button>
               </div>
             </div>
 
