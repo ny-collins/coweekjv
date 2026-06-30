@@ -2,7 +2,7 @@
 
 A high-performance, minimalist, and offline-capable Progressive Web Application (PWA) built with SvelteKit and Svelte 5 to read and navigate the King James Version of the Bible, including the Apocrypha.
 
-A live deployment of the application is available at: https://kjv-bible-7mw.pages.dev/
+A live deployment of the application is available at: https://coweekjv.pages.dev/
 
 ---
 
