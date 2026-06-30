@@ -155,12 +155,11 @@
   <meta property="og:title" content="Cowee KJV Bible" />
   <meta property="og:description" content="Read the King James Version of the Bible online." />
   <meta property="og:url" content={`${SITE_URL}/`} />
+  <link rel="canonical" href={`${SITE_URL}/`} />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Cowee KJV Bible" />
   <meta name="twitter:description" content="Read the King James Version of the Bible online." />
-  <script type="application/ld+json">
-    {JSON.stringify(structuredData)}
-  </script>
+  {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}<\/script>`}
 </svelte:head>
 
 <div class="brand-hero-header">

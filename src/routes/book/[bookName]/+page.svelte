@@ -12,6 +12,25 @@
       "name": `${data.displayName} ${chapter}`
     }))
   });
+
+  let breadcrumbData = $derived({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": `${SITE_URL}/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": data.displayName,
+        "item": `${SITE_URL}/book/${data.bookName}`
+      }
+    ]
+  });
 </script>
 
 <svelte:head>
@@ -21,13 +40,13 @@
   <meta property="og:title" content={`${data.displayName} | Cowee KJV`} />
   <meta property="og:description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
   <meta property="og:url" content={`${SITE_URL}/book/${data.bookName}`} />
+  <link rel="canonical" href={`${SITE_URL}/book/${data.bookName}`} />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content={`${data.displayName} | Cowee KJV`} />
   <meta name="twitter:description" content={`Read the book of ${data.displayName} from the King James Version of the Bible.`} />
   {#if data.chapters}
-    <script type="application/ld+json">
-      {JSON.stringify(structuredData)}
-    </script>
+    {@html `<script type="application/ld+json">${JSON.stringify(structuredData)}<\/script>`}
+    {@html `<script type="application/ld+json">${JSON.stringify(breadcrumbData)}<\/script>`}
   {/if}
 </svelte:head>
 
