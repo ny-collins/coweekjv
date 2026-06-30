@@ -11,6 +11,22 @@
 
   function handleGlobalKeyDown(event) {
     if (event.key === 'Escape') {
+      // Don't navigate if focusing an input, textarea, or select
+      const activeEl = document.activeElement;
+      if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA' || activeEl.tagName === 'SELECT')) {
+        return;
+      }
+
+      // Don't navigate if settings dropdown is open
+      if (document.querySelector('.settings-dropdown')) {
+        return;
+      }
+
+      // Don't navigate if floating verse toolbar is open
+      if (document.querySelector('.floating-toolbar')) {
+        return;
+      }
+
       const splash = document.getElementById('app-splash-screen');
       if (!splash && $page.url.pathname !== '/') {
         event.preventDefault();
@@ -27,7 +43,8 @@
     // 0. Fade out and remove the instant PWA splash screen
     const splash = document.getElementById('app-splash-screen');
     if (splash) {
-      const minDuration = 2500; // Enforce a 2.5s minimum display time for visual branding presence
+      const hasSeenSplash = sessionStorage.getItem('hasSeenSplash') === 'true';
+      const minDuration = hasSeenSplash ? 0 : 1000; // 1s on first visit, bypass on reloads
       const elapsedTime = Date.now() - (window.appStartTime || Date.now());
       const delay = Math.max(0, minDuration - elapsedTime);
 
@@ -36,6 +53,9 @@
         setTimeout(() => {
           splash.style.visibility = 'hidden';
           splash.remove();
+          try {
+            sessionStorage.setItem('hasSeenSplash', 'true');
+          } catch (e) {}
         }, 300); // Wait for transition fade-out to finish
       }, delay);
     }
@@ -123,7 +143,7 @@
 {/if}
 
 <style>
-  :global(.skip-link) {
+  .skip-link {
     position: absolute;
     top: -40px;
     left: 0;
@@ -133,7 +153,7 @@
     z-index: 100;
   }
 
-  :global(.skip-link:focus) {
+  .skip-link:focus {
     top: 0;
   }
 

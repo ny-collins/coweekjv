@@ -171,6 +171,14 @@
 
   // Toggle verse selection
   function toggleVerseHighlight(verseNum) {
+    // Prevent toggling the verse highlight if the user is drag-selecting text to copy
+    if (browser) {
+      const selection = window.getSelection();
+      if (selection && selection.toString().trim() !== '') {
+        return;
+      }
+    }
+
     if (highlightedVerses.has(verseNum)) {
       highlightedVerses.delete(verseNum);
     } else {
@@ -358,7 +366,16 @@
     },
     "text": data.verses ? data.verses.map(v => v.text).join(' ') : ''
   });
+
+  function handleGlobalKeyDown(e) {
+    if (e.key === 'Escape' && highlightedVerses.size > 0) {
+      clearSelection();
+      e.stopPropagation();
+    }
+  }
 </script>
+
+<svelte:window onkeydown={handleGlobalKeyDown} />
 
 <svelte:head>
   <title>{data.displayName} {data.chapterNum} | Cowee KJV</title>

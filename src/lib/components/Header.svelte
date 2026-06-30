@@ -90,8 +90,16 @@
       }
     };
 
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && showSettings) {
+        showSettings = false;
+        e.stopPropagation();
+      }
+    };
+
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('click', handleDocumentClick);
+    window.addEventListener('keydown', handleKeyDown);
 
     // PWA Install handlers
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -108,6 +116,7 @@
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('click', handleDocumentClick);
+      window.removeEventListener('keydown', handleKeyDown);
     };
   });
 

@@ -27,16 +27,21 @@
       window.appStartTime = Date.now();
       (function() {
         try {
-          var isDark = localStorage.getItem('darkMode') === 'true';
           const savedTheme = localStorage.getItem('selectedTheme');
+          const oldDarkMode = localStorage.getItem('darkMode');
+          
+          let activeTheme = 'light';
           if (savedTheme) {
-            isDark = (savedTheme === 'dark' || savedTheme === 'slate');
+            activeTheme = savedTheme;
+          } else if (oldDarkMode === 'true') {
+            activeTheme = 'dark';
           }
-          if (isDark) {
-            document.documentElement.classList.add('dark-mode');
-          }
-          if (savedTheme && savedTheme !== 'light') {
-            document.documentElement.classList.add(savedTheme + '-mode');
+
+          if (activeTheme !== 'light') {
+            document.documentElement.classList.add(activeTheme + '-mode');
+            if (activeTheme === 'dark') {
+              document.documentElement.classList.add('dark-mode');
+            }
           }
           var fontSize = localStorage.getItem('fontSize');
           if (fontSize) {
@@ -45,9 +50,9 @@
           var meta = document.querySelector('meta[name="theme-color"]');
           if (meta) {
             var themeColor = '#fcfaf6';
-            if (savedTheme === 'sepia') themeColor = '#f4ecd8';
-            else if (savedTheme === 'slate') themeColor = '#0f172a';
-            else if (savedTheme === 'dark' || isDark) themeColor = '#0c0e14';
+            if (activeTheme === 'sepia') themeColor = '#f4ecd8';
+            else if (activeTheme === 'slate') themeColor = '#0f172a';
+            else if (activeTheme === 'dark') themeColor = '#0c0e14';
             meta.setAttribute('content', themeColor);
           }
           // Define global splash dismissal helpers
@@ -75,9 +80,9 @@
           // Set CSS custom properties on document element instantly to prevent splash flashing
           var bg = '#fcfaf6';
           var tc = '#2c2a29';
-          if (savedTheme === 'sepia') { bg = '#f4ecd8'; tc = '#5c4033'; }
-          else if (savedTheme === 'slate') { bg = '#0f172a'; tc = '#cbd5e1'; }
-          else if (savedTheme === 'dark' || isDark) { bg = '#0c0e14'; tc = '#e2e8f0'; }
+          if (activeTheme === 'sepia') { bg = '#f4ecd8'; tc = '#5c4033'; }
+          else if (activeTheme === 'slate') { bg = '#0f172a'; tc = '#cbd5e1'; }
+          else if (activeTheme === 'dark') { bg = '#0c0e14'; tc = '#e2e8f0'; }
           document.documentElement.style.setProperty('--splash-bg', bg);
           document.documentElement.style.setProperty('--splash-tc', tc);
         } catch (e) {}

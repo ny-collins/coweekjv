@@ -1,95 +1,102 @@
-# King James Version Bible Reader
+# 📖 Cowee KJV Bible Reader
 
-A high-performance, minimalist, and offline-capable Progressive Web Application (PWA) built with SvelteKit and Svelte 5 to read and navigate the King James Version of the Bible, including the Apocrypha.
+A high-performance, minimalist, and offline-capable Progressive Web Application (PWA) built with **SvelteKit** and **Svelte 5** to read and navigate the King James Version of the Bible, including the Apocrypha.
 
-A live deployment of the application is available at: https://coweekjv.pages.dev/
-
----
-
-## Features
-
-### Comprehensive Canon Filtering
-* **Dynamic Canon Support**: Users can filter books dynamically by Protestant Canon, Catholic Canon, Orthodox Canon, or view the Full Collection (All Books).
-
-### Advanced Navigation
-* **Continuous Cross-Book Navigation**: Allows readers to navigate seamlessly from the last chapter of a book to the first chapter of the next canonical book, or from the first chapter of a book to the last chapter of the preceding one.
-* **Dual Layout Quick Navigation**: Features a dynamic layout that provides vertical chapter quick-navigation on mobile screens and a sticky sidebar on wider viewports.
-
-### Robust Progressive Web App (PWA) Integration
-* **Offline Functionality**: Backed by a custom Service Worker that pre-caches the client-side app shell, dynamic data chunks, and static assets.
-* **Self-Contained Pre-caching**: Resolves common pre-cache validation issues on static hosting environments by bypassing explicit 404 pages in the installer cache.
-* **Dynamic Update Alerts**: Notifies users with an on-screen toast reload button when a new version of the application is available, triggering automatic cache invalidation and hot-reloading.
-* **Notch and Safe-Area Support**: Fully accommodates modern mobile viewports using device safe-area CSS layout offsets.
-
-### Reader Preferences and Actions
-* **Persistent Display Configuration**: Options to toggle dark mode and adjust scripture font sizes. Settings are stored locally in the client's web storage (`localStorage`).
-* **Academic Citation**: Fast, one-click copying of standard bibliographical references to the clipboard (e.g., "Genesis 1:1, King James Version.").
-* **Structured Data Export**: Allows downloading individual chapters as formatted JSON documents containing structured verse metadata.
+🌐 **Live Deployment**: [https://coweekjv.pages.dev/](https://coweekjv.pages.dev/)
 
 ---
 
-## Technical Architecture
+## 🌟 Key Features
 
-The application is built on top of SvelteKit using the static adapter to produce a fully pre-rendered site, facilitating instant load times and compatibility with static hosting providers (such as Cloudflare Pages or GitHub Pages).
+* 📱 **Progressive Web App (PWA)**: Installable on iOS, Android, and desktop. Safe-area margins accommodate modern device viewports and notches.
+* 📴 **Offline Caching**: Built with a custom Service Worker that pre-caches the client-side app shell, dynamic data chunks, and static assets. Bypasses 404 installation issues and cleans headers automatically to prevent Firefox load errors.
+* 🔄 **Dynamic Update Alerts**: Instantly alerts the user with an on-screen toast reload button when a new build is deployed, facilitating seamless cache invalidation.
+* 🕊️ **Flexible Canon Filters**: Dynamically switch the active view between the Protestant Canon, Catholic Canon, Orthodox Canon, or all books (including the Apocrypha).
+* 🔀 **Continuous Book Navigation**: Fluidly navigate from the last chapter of a book to the first chapter of the next canonical book, preserving URL-state parameters.
+* 🎨 **Premium Aesthetics**: Curated color themes (Light, Sepia, Dark, and Slate) with a custom progress monogram logo, adjustable font sizes, reading widths, and typography options (including OpenDyslexic support).
+* 📋 **Academic Citation & Sharing**: Copy formatted biblical citations to the clipboard instantly, share specific highlighted verses via deep-linked fragment hashes (e.g. `#v1,2,3`), or download chapter text as structured JSON files.
 
-### File Structure
-* `src/routes/+layout.svelte`: Core wrapper containing persistent header controls (Theme selector, font-size controls, installation button), runtime service worker registration, and update toast state management.
-* `src/routes/+page.svelte`: Home page. Contains the primary search query logic, sorting options (canonical or chronological order), canon filter, and the responsive grid of books.
-* `src/routes/book/[bookName]/+page.svelte`: Mid-level index page displaying the available chapters for a selected book.
-* `src/routes/book/[bookName]/[chapterNum]/+page.svelte`: Primary reading layout displaying the chapter scriptures, navigation buttons, and verse actions.
-* `src/routes/sitemap.xml/+server.js`: Automatically generates a search engine indexable XML sitemap listing all book and chapter URLs dynamically.
-* `src/lib/site.js`: Central source for the deployment base URL used by sitemap and structured metadata (`PUBLIC_SITE_URL` with fallback).
-* `src/service-worker.js`: Handles network proxy caching, static file indexing, and updates cache structures when new builds are deployed.
-* `src/lib/data/`: Houses the text of the Bible parsed into isolated book JSON chunks, alongside canonical mappings and metadata in `BooksWithMetadata.json`.
+---
 
-### Static Pre-rendering Optimization
-To avoid runtime overhead and network delays, SvelteKit pre-renders all routes at build time. The `entries()` APIs resolve valid books and chapters by iterating over the unified metadata structure (`BooksWithMetadata.json`) in memory, eliminating filesystem globs or dynamic disk reads during the compiler step.
+## 🛠️ Technical Architecture
 
-### Chronological Sorting Order
-When sorting chronologically, the application resolves composition timeline boundaries using composition estimates. If two books share the same approximate chronological era, a stable canonical sorting fallback is applied:
-```javascript
-const difference = a.chronologicalOrder - b.chronologicalOrder;
-return difference !== 0 ? difference : a.canonicalOrder - b.canonicalOrder;
+The application is built on top of SvelteKit using static pre-rendering to produce a fast, pre-rendered site optimized for edge hosting on **Cloudflare Pages**.
+
+### Core Technologies
+* **Framework**: SvelteKit (v2) with Svelte 5 (`$state`, `$derived`, and `$effect` runes)
+* **Vite**: Hot Module Replacement (HMR) and static code compilation
+* **Adapter**: `@sveltejs/adapter-cloudflare` for build-time routing and static pages generation
+* **Styling**: Vanilla CSS with custom properties (`--variables`) for instant theme application
+* **Database**: Decentralized local JSON database split by book (located in `src/lib/data/`)
+
+---
+
+## 📂 Project Structure
+
+```
+coweekjv/
+├── src/
+│   ├── lib/
+│   │   ├── components/       # Reusable layout UI components (Header, Footer)
+│   │   ├── data/             # Static Bible text JSON database & canonical metadata
+│   │   └── site.js           # Production URL configurations
+│   ├── routes/
+│   │   ├── book/[bookName]/  # Book chapter index route
+│   │   │   └── [chapterNum]/ # Primary reading screen with verse actions
+│   │   ├── +layout.svelte    # Global app shell (PWA handlers, splash manager, update toast)
+│   │   ├── +page.svelte      # Homepage (filter, search, and dynamic books grid)
+│   │   └── sitemap.xml/      # Dynamic sitemap.xml generator for search engines
+│   ├── app.html              # Core HTML structure and instant theme preloader
+│   ├── app.css               # Global stylesheets & color palette configurations
+│   └── service-worker.js     # Custom background asset caching and sync manager
+├── static/                   # Static public assets (Favicon pack, PWA manifests, robots.txt)
+├── svelte.config.js          # Svelte configuration
+├── vite.config.js            # Vite bundler configurations
+└── package.json              # Package manifest and dependencies
 ```
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
-* Node.js (version 20.19+ or 22.12+)
-* npm (Node Package Manager)
+* **Node.js** (v20.19+ or v22.12+)
+* **npm** (Node Package Manager)
 
 ### Installation
-Clone the repository and install the dependencies:
+Clone the repository and install the project dependencies:
 ```bash
 git clone https://github.com/ny-collins/kjv-bible.git
 cd kjv-bible
 npm install
 ```
 
-### Local Development
-To run the project locally with hot module replacement (HMR):
+### Development
+Launch the local development server with Hot Module Replacement:
 ```bash
 npm run dev
 ```
-The application will be accessible at `http://localhost:5173`.
+Open [http://localhost:5173](http://localhost:5173) in your web browser.
 
-Optional: set a deployment URL for sitemap and structured metadata generation.
-```bash
-PUBLIC_SITE_URL=https://your-domain.example npm run build
-```
+### Production Build & Local Preview
+1. Compile the Svelte components and pre-render all static HTML routes:
+   ```bash
+   npm run build
+   ```
+2. Preview the compiled production build locally to test service workers and offline behaviors:
+   ```bash
+   npm run preview
+   ```
 
-### Production Build and Deployment
-Build the static site output:
-```bash
-npm run build
-```
-This command compiles Svelte components, resolves prerendered static pages, registers the Service Worker, and saves the output directory as `build/`.
-Service worker registration is performed at runtime from the app layout (in production only).
+---
 
-To preview the built static output locally:
-```bash
-npm run preview
-```
-This launches a local web server serving files directly from the `build/` directory, mimicking a production deployment environment.
+## ☁️ Deployment
+
+The project is pre-configured to build and deploy to **Cloudflare Pages**. 
+
+When setting up your build commands on Cloudflare Pages:
+* **Framework preset**: `SvelteKit`
+* **Build command**: `npm run build`
+* **Build output directory**: `.svelte-kit/cloudflare`
+* **Environment variables** (Optional):
+  * `PUBLIC_SITE_URL` = `https://coweekjv.pages.dev`

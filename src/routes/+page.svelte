@@ -7,7 +7,7 @@
   const defaultCanon = 'protestant';
   let searchTerm = $state('');
   let sortOrder = $state('canonical');
-  let selectedCanon = $state(defaultCanon);
+  let selectedCanon = $state(data.canon || defaultCanon);
 
   let recentlyRead = $state([]);
   let bookmarks = $state([]);
@@ -16,13 +16,14 @@
     const urlParams = new URLSearchParams(window.location.search);
     const urlCanon = urlParams.get('canon');
     
-    if (!urlCanon) {
+    if (urlCanon && data.collections[urlCanon]) {
+      selectedCanon = urlCanon;
+      localStorage.setItem('selectedCanon', urlCanon);
+    } else {
       const savedCanon = localStorage.getItem('selectedCanon');
       if (savedCanon && data.collections[savedCanon]) {
         selectedCanon = savedCanon;
       }
-    } else {
-      localStorage.setItem('selectedCanon', urlCanon);
     }
     
     const savedSort = localStorage.getItem('selectedSort');
@@ -77,9 +78,7 @@
     localStorage.setItem('selectedSort', sortOrder);
   });
 
-  $effect(() => {
-    selectedCanon = data.canon;
-  });
+  // Data.canon synchronization removed as selectedCanon is initialized directly
 
   $effect(() => {
     if (!browser) return;

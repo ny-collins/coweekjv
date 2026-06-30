@@ -1,4 +1,4 @@
-const DEFAULT_SITE_URL = 'https://kjv-bible-7mw.pages.dev';
+const DEFAULT_SITE_URL = 'https://coweekjv.pages.dev';
 
 const configuredSiteUrl = import.meta.env.PUBLIC_SITE_URL;
 
